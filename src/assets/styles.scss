@@ -14,3 +14,10 @@
   --primary-color: #18121E80;
   --white-color: #fff;
 }
+
+.header__logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
