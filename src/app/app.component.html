@@ -1,67 +1,230 @@
-<div class="hero-wrapper">
-  <header class="header">
-    <div class="header__container">
+@if (isLoading) {
+  <div class="loader">
+    <img
+      src="/images/loading.svg"
+      alt="Loading"
+      class="loader__icon"
+    >
+  </div>
+}
 
-      <div class="header__logo">
-        <img src="/images/logo-icon.svg" alt="logo">
-        <span class="header__logo-text white-text">{{ companyName }}</span>
+@if (!isLoading) {
+  <div class="hero-wrapper">
+    <header class="header">
+      <div class="header__container">
+
+        <div class="header__logo">
+          <img src="/images/logo-icon.svg" alt="logo">
+          <span class="header__logo-text white-text">{{ companyName }}</span>
+        </div>
+
+        <nav class="header__nav white-text">
+            <a>Главная</a>
+            <a>Про гида</a>
+            <a>Программа тура</a>
+            <a>Стоимость</a>
+            <a>Блог</a>
+            <a>Контакты</a>
+        </nav>
+       
+          <div class="header__actions white-text">
+            <button>Консультация</button>
+          </div>
+          
+        <div class="header__switch">
+          <div class="header__info">
+            @if (showTimer) {
+              {{ currentDate }}
+            } @else {
+              <div class="header__counter">
+                <button 
+                  type="button"
+                  (click)="decrease()"
+                >-</button>
+                <span>{{ clickCount }}</span>
+                <button
+                  type="button"
+                  (click)="increase()"
+                >+</button>
+              </div>
+            }
+          </div>
+          <button 
+            class="header__switch-text"
+            (click)="toggleHeaderInfo()"
+          >
+            @if (showTimer) {
+              Показать кликер
+            } @else {
+              Показать таймер
+            }
+          </button>
+        </div>
+
+        <div class="live-input">
+          <input type="text" [(ngModel)]="liveText" placeholder="Введите текст">
+          <span>{{ liveText }}</span>
+        </div>
+
       </div>
+    </header>
 
-      <nav class="header__nav white-text">
-          <a>Главная</a>
-          <a>Про гида</a>
-          <a>Программа тура</a>
-          <a>Стоимость</a>
-          <a>Блог</a>
-          <a>Контакты</a>
-      </nav>
-
-      <div class="header__actions white-text">
-        <button>Консультация</button>
+    <section class="banner">
+      <div class="hero__content">
+        <h1 class="hero__title white-text">
+          Насладись прогулкой в горах<br>
+          с командой единомышленников
+        </h1>
       </div>
-    </div>
-  </header>
+    </section>
 
-  <section class="banner">
-    <div class="hero__content">
-      <h1 class="hero__title white-text">
-        Насладись прогулкой в горах<br>
-        с командой единомышленников
-      </h1>
-    </div>
-  </section>
-
-  <section class="search-panel">
+    <section class="search-panel">
     <div class="search-panel__inner">
-
       <div class="field">
         <div class="field__input">
-          <span>Локация для тура</span>
+          <select [(ngModel)]="location">
+            <option value="">Локация для тура</option>
+            <option value="Горы">Горы</option>
+            <option value="Лес">Лес</option>
+            <option value="Озеро">Озеро</option>
+          </select>
           <img src="/images/arrow-down.svg">
         </div>
-        <div class="field__hint">выберите из списка</div>
+        <div class="field__hint">
+          выберите из списка
+        </div>
       </div>
 
       <div class="field">
         <div class="field__input">
-          <span>Дата похода</span>
+          <input 
+            type="date" 
+            [(ngModel)]="date"
+          >
           <img src="/images/date.svg">
         </div>
-        <div class="field__hint">укажите дату</div>
-    </div>
+        <div class="field__hint">
+          укажите дату
+        </div>
+      </div>
 
       <div class="field">
         <div class="field__input">
-          <span>Участники</span>
+          <select [(ngModel)]="participants">
+            <option value="" disabled selected>Участники</option>
+            <option value="1">1 человек</option>
+            <option value="2">2 человека</option>
+            <option value="3">3 человека</option>
+            <option value="4">4 человека</option>
+          </select>
+
           <img src="/images/arrow-down.svg">
         </div>
-        <div class="field__hint">выберите из списка</div>
-    </div>
+        <div class="field__hint">
+          выберите из списка
+        </div>
+      </div>
 
-    <button class="search-panel__btn">
-      Найти программу
-    </button>
+      <button 
+        class="search-panel__btn"
+        [disabled]="!isFormValid"
+      >
+        Найти программу
+      </button>
+    </div>
+    </section>
+  </div>
+
+  <section class="about">
+    <div class="about__container">
+
+      <div class="about__gallery">
+        <div class="about__nature-first">
+          <img src="/images/nature-first.svg" alt="Nature landscape">
+
+          <div class="about__play">
+            <img src="/images/play-arrow.svg" alt="Play video">
+          </div>
+        </div>
+
+        <div class="about__nature-second">
+          <img src="/images/nature-second.svg" alt="Mountain landscape">
+        </div>
+      </div>
+
+      <div class="about__content">
+        <div class="about__subtitle">
+          о нашем походе
+        </div>
+
+        <h2 class="about__title">
+          Исследуйте все горные массивы мира вместе с нами
+        </h2>
+
+        <p class="about__text">
+          Его корни уходят в один фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад. Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния, взял одно из самых странных слов в Lorem Ipsum, "consectetur" и занялся его поисками в классической латинской литературе.
+        </p>
+
+        <button class="about__button">
+          Программа тура
+        </button>
+      </div>
 
     </div>
   </section>
-</div>
+
+  <section class="programs">
+    <div class="programs__container">
+      <div class="programs__content">
+        <div class="programs__subtitle">
+          Наше предложение
+        </div>
+
+        <h2 class="programs__title">
+          Лучшие программы для тебя
+        </h2>
+
+        <p class="programs__text">
+          Его корни уходят в один фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад. Ричард МакКлинток, профессор латыни из колледжа.
+        </p>
+
+        <div class="programs__items">
+          @for (item of programs; track item.title) {
+            <div class="programs__item">
+              <img [src]="item.icon" alt="Program icon">
+              <div class="programs__item-content">
+                <div class="programs__item-title">
+                  {{ item.title }}
+                </div>
+                <div class="programs__item-text">
+                  {{ item.text }}
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+        <button class="programs__button">
+          Стоимость программ
+        </button>
+      </div>
+
+      <div class="programs__gallery">
+        <div class="programs__image programs__image--first">
+          <img src="/images/relax-first.svg" alt="Relax">
+        </div>
+
+        <div class="programs__image programs__image--second">
+          <img src="/images/relax-second.svg" alt="Relax">
+        </div>
+
+        <div class="programs__image programs__image--third">
+          <img src="/images/relax-third.svg" alt="Relax">
+        </div>
+
+        <div class="programs__image programs__image--fourth">
+          <img src="/images/relax-fourth.svg" alt="Relax">
+        </div>
+      </div>
+    </div>
+  </section>
+}
