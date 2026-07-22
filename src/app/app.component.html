@@ -161,11 +161,10 @@
           Исследуйте все горные массивы мира вместе с нами
         </h2>
 
-        <p class="about__text">
-          Его корни уходят в один фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад. Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния, взял одно из самых странных слов в Lorem Ipsum, "consectetur" и занялся его поисками в классической латинской литературе.
-        </p>
-
-        <button class="about__button">
+        <button 
+          class="about__button"
+          (click)="showSuccess()"
+        >
           Программа тура
         </button>
       </div>
@@ -176,13 +175,14 @@
   <section class="programs">
     <div class="programs__container">
       <div class="programs__content">
+
         <div class="programs__subtitle">
           Наше предложение
         </div>
 
         <h2 class="programs__title">
           Лучшие программы для тебя
-        </h2>
+        </h2>   
 
         <p class="programs__text">
           Его корни уходят в один фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад. Ричард МакКлинток, профессор латыни из колледжа.
@@ -203,7 +203,10 @@
             </div>
           }
         </div>
-        <button class="programs__button">
+        <button 
+          class="programs__button"
+          (click)="showInfo()"
+        >
           Стоимость программ
         </button>
       </div>
@@ -227,4 +230,160 @@
       </div>
     </div>
   </section>
+
+  <section class="destinations">
+    <div class="destinations__container">
+      <div class="destinations__header">
+        <div class="destinations__subtitle">
+          по версии отдыхающих
+        </div>
+
+        <h2 class="destinations__title">
+          Популярные направления
+        </h2>
+      </div>
+
+      <div class="destinations__cards">
+        @for (destination of destinations; track destination.title) {
+          <div class="destinations__card">
+            <img
+              class="destinations__image"
+              [src]="destination.image"
+              [alt]="destination.title"
+            >
+            <div class="destinations__rating">
+              <div class="destinations__rating-content">
+                <img
+                  src="/images/rating-star.svg"
+                  alt="Rating"
+                >
+                <span>
+                  {{ destination.rating }}
+                </span>
+              </div>
+            </div>
+
+            <div class="destinations__info">
+              <div class="destinations__text">
+                <div class="destinations__name">
+                  {{ destination.title }}
+                </div>
+                <div class="destinations__description">
+                  {{ destination.description }}
+                </div>
+              </div>
+
+              <div class="destinations__price">
+                {{ destination.price }}
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+      <button 
+        class="destinations__button"
+        (click)="showWarn()"
+      >
+        Рейтинг направлений
+      </button>
+    </div>
+  </section>
+
+  <section class="blog">
+    <div class="blog__container">
+
+      <div class="blog__header">
+        <div class="blog__subtitle">
+          делимся впечатлениями
+        </div>
+
+        <h2 class="blog__title">
+          Блог о путешествиях
+        </h2>
+      </div>
+
+      <div class="blog__posts">
+        @for (post of blogPosts; track post.title) {
+          <div class="blog__card">
+
+            <div class="blog__image">
+              <img
+                [src]="post.image"
+                [alt]="post.title"
+              >
+            </div>
+
+            <div class="blog__content">
+
+              <h3
+                class="blog__card-title"
+                [class.blog__card-title--highlight]="post.highlighted"
+              >
+                {{ post.title }}
+              </h3>
+
+              <p class="blog__card-text">
+                {{ post.description }}
+              </p>
+
+              <div class="blog__footer">
+                <span class="blog__date">
+                  {{ post.date }}
+                </span>
+
+                <a class="blog__link">
+                  {{ post.link }}
+                </a>
+              </div>
+
+            </div>
+
+          </div>
+        }
+      </div>
+
+      <button 
+        class="blog__button"
+        (click)="showError()"
+      >
+        Другие материалы
+      </button>
+
+    </div>
+  </section>
 }
+
+<div class="messages">
+  @for (message of messageService.messages; track message.id) {
+    <ng-container
+      *ngTemplateOutlet="messageTemplate; context: { message: message }"
+    >
+    </ng-container>
+  }
+</div>
+
+<ng-template #messageTemplate let-message="message">
+  <div class="message-card">
+
+    <img 
+      src="/images/messages/icon-message.png"
+      class="message-card__icon"
+    >
+
+    <div class="message-card__content">
+      <div class="message-card__type">
+        {{ message.type }}
+      </div>
+      <div class="message-card__text">
+        {{ message.text }}
+      </div>
+    </div>
+
+    <button 
+      class="message-card__delete"
+      (click)="messageService.closeMessage(message.id)"
+    >
+      <img src="/images/messages/icon-delete.png">
+    </button>
+  </div>
+</ng-template>
