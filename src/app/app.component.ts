@@ -6,8 +6,6 @@ import { Collection } from '../collection';
 import { FormsModule } from '@angular/forms';
 import { DESTINATIONS } from '../data/destinations';
 import { blogPosts } from '../data/blog';
-import { Message } from '../enums/Message';
-import { MessageType } from '../enums/MessageType';
 import { MessageService } from './message.service';
 import { LocalStorageService } from './local-storage.service';
 
@@ -30,7 +28,6 @@ export class AppComponent implements OnDestroy {
   public showTimer = true;
   public liveText: string = '';
   public isLoading = true;
-  public MessageType = MessageType;
 
   public programs = [
     {
@@ -131,34 +128,6 @@ export class AppComponent implements OnDestroy {
       this.clickCount--;
     }
   };
-
-  public showSuccess(): void {
-    this.messageService.addMessage(
-      MessageType.Success,
-      'Успешное сообщение'
-    );
-  }
-
-  public showInfo(): void {
-    this.messageService.addMessage(
-      MessageType.Info,
-      'Информационное сообщение'
-    );
-  }
-
-  public showWarn(): void {
-    this.messageService.addMessage(
-      MessageType.Warn,
-      'Предупреждение'
-    );
-  }
-
-  public showError(): void {
-    this.messageService.addMessage(
-      MessageType.Error,
-      'Ошибка'
-    );
-  }
 
   public ngOnDestroy(): void {
     clearInterval(this.timerId);

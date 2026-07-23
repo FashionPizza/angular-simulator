@@ -163,7 +163,7 @@
 
         <button 
           class="about__button"
-          (click)="showSuccess()"
+          (click)="messageService.showSuccess()"
         >
           Программа тура
         </button>
@@ -205,7 +205,7 @@
         </div>
         <button 
           class="programs__button"
-          (click)="showInfo()"
+          (click)="messageService.showInfo()"
         >
           Стоимость программ
         </button>
@@ -282,7 +282,7 @@
       </div>
       <button 
         class="destinations__button"
-        (click)="showWarn()"
+        (click)="messageService.showWarn()"
       >
         Рейтинг направлений
       </button>
@@ -344,7 +344,7 @@
 
       <button 
         class="blog__button"
-        (click)="showError()"
+        (click)="messageService.showError()"
       >
         Другие материалы
       </button>

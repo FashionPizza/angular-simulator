@@ -11,7 +11,23 @@ export class MessageService {
 
   private nextId = 1;
 
-  public addMessage(type: MessageType, text: string): void {
+  public showSuccess(): void {
+    this.addMessage(MessageType.Success, 'Успешное сообщение');
+  }
+
+  public showInfo(): void {
+    this.addMessage(MessageType.Info, 'Информационное сообщение');
+  }
+
+  public showWarn(): void {
+    this.addMessage(MessageType.Warn, 'Предупреждение');
+  }
+
+  public showError(): void {
+    this.addMessage(MessageType.Error, 'Ошибка');
+  }
+
+  private addMessage(type: MessageType, text: string): void {
     const message: Message = {
       id: this.nextId++,
       type,
