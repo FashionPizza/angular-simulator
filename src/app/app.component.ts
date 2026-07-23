@@ -4,6 +4,10 @@ import { Color } from '../enums/Color';
 import './training';
 import { Collection } from '../collection';
 import { FormsModule } from '@angular/forms';
+import { DESTINATIONS } from '../data/destinations';
+import { blogPosts } from '../data/blog';
+import { MessageService } from './message.service';
+import { LocalStorageService } from './local-storage.service';
 
 @Component({
   selector: 'app-root',
@@ -43,6 +47,9 @@ export class AppComponent implements OnDestroy {
     }
   ];
 
+  public destinations = DESTINATIONS;
+  public blogPosts = blogPosts;
+
   public numberCollection = new Collection<number>([
     1,
     2,
@@ -58,7 +65,10 @@ export class AppComponent implements OnDestroy {
 
   private timerId!: ReturnType<typeof setInterval>;
 
-  public constructor() {
+  public constructor(
+    public messageService: MessageService,
+    public localStorageService: LocalStorageService
+  ) {
     this.updateDate();
     this.timerId = setInterval(() => {
       this.updateDate();
@@ -130,19 +140,17 @@ export class AppComponent implements OnDestroy {
 
   private saveLastVisitDate(): void {
     const date = new Date();
-
-    localStorage.setItem(
+    this.localStorageService.set(
       'lastVisit',
       date.toISOString()
     );
   };
 
   private saveVisitCount(): void {
-    const count = Number(localStorage.getItem('visitCount')) || 0;
-
-    localStorage.setItem(
+    const count = this.localStorageService.get<number>('visitCount') || 0;
+    this.localStorageService.set(
       'visitCount',
-      String(count + 1)
+      count + 1
     );
   };
 };
