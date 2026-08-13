@@ -1,0 +1,76 @@
+<footer class="footer-wrapper">
+  @if (!isSubscribed) {
+    <div class="subscribe">
+      <div class="subscribe__left">
+        <span class="subscribe__subtitle">актуально</span>
+        <h3 class="subscribe__title">Получайте полезные рассылки о путешествиях</h3>
+      </div>
+      <div class="subscribe__right">
+        <div class="subscribe__form">
+          <div class="subscribe__field">
+            <label class="subscribe__label">Введите e-mail адрес</label>
+            <div class="subscribe__input-wrapper">
+              <input class="subscribe__input" type="email" placeholder="name@domain.com" [(ngModel)]="email" />
+            </div>
+          </div>
+          <button class="subscribe__button" type="button" (click)="onSubscribe()">Консультация</button>
+        </div>
+        <p class="subscribe__disclaimer">
+          подписываясь на новости, вы автоматически соглашаетесь с условиями обработки персональных данных и правилами рекламных рассылок
+        </p>
+      </div>
+    </div>
+  }
+
+  <div class="information">
+    <div class="information__company">
+      <h3 class="information__title">Компания «РумТибет»</h3>
+      <p class="information__about">
+        Его корни уходят в один фрагмент классической латыни 45 года н.э.,
+        то есть более двух тысячелетий назад.
+      </p>
+      <div class="information__contacts">
+        <a href="mailto:info@domain.com">info&#64;domain.com</a>
+        <a href="tel:+71234567890">+7 (123) 456-78-90</a>
+      </div>
+      <ul class="information__socials">
+        @for (social of socials; track social.icon) {
+          <li class="information__social">
+            <a [href]="social.link"><img [src]="social.icon" [alt]="social.name" /></a>
+          </li>
+        }
+      </ul>
+    </div>
+
+    <div class="information__column">
+      <h3 class="information__title">Наши услуги</h3>
+      <ul class="information__list">
+        @for (service of services; track service.text) {
+          <li class="information__item">
+            <span class="information__item-icon"><img [src]="service.icon" alt="" /></span>
+            <span class="information__item-text">{{ service.text }}</span>
+          </li>
+        }
+      </ul>
+    </div>
+
+    <div class="information__travel">
+      <h3 class="information__title">Важно для путешествий</h3>
+      <ul class="information__list">
+        @for (info of travelInfo; track info.text) {
+          <li class="information__item">
+            <span class="information__item-icon"><img [src]="info.icon" alt="" /></span>
+            <span class="information__item-text">{{ info.text }}</span>
+          </li>
+        }
+      </ul>
+    </div>
+
+    <div class="information__bottom">
+      <div class="information__bottom-container">
+        <span>ИП Константинопольский К.К., 2023</span>
+        <a href="#">Политика обработки персональных данных</a>
+      </div>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,46 @@
+<header class="header">
+  <div class="header__container">
+    <a class="header__logo" routerLink="/">
+      <img src="/images/logo-icon.svg" alt="Логотип" />
+      <span class="header__logo-text">{{ companyName }}</span>
+    </a>
+
+    <nav class="header__nav">
+      @for (item of navItems; track item.path) {
+        <a
+          [routerLink]="item.path"
+          routerLinkActive="is-active"
+          [routerLinkActiveOptions]="{ exact: item.exact }"
+        >
+          {{ item.label }}
+        </a>
+      }
+    </nav>
+
+    <div class="header__actions">
+      <button type="button">Консультация</button>
+    </div>
+
+    <div class="header__switch">
+      <div class="header__info">
+        @if (showTimer) {
+          <span class="header__timer">{{ currentDate() }}</span>
+        } @else {
+          <div class="header__counter">
+            <button type="button" (click)="decrease()">-</button>
+            <span>{{ clickCount }}</span>
+            <button type="button" (click)="increase()">+</button>
+          </div>
+        }
+      </div>
+      <button class="header__switch-text" type="button" (click)="toggleHeaderInfo()">
+        {{ showTimer ? 'Показать кликер' : 'Показать таймер' }}
+      </button>
+    </div>
+
+    <div class="live-input">
+      <input type="text" [(ngModel)]="liveText" placeholder="Введите текст" />
+      <span class="live-text">{{ liveText }}</span>
+    </div>
+  </div>
+</header>

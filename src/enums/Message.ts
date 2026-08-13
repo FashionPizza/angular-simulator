@@ -4,4 +4,5 @@ export interface Message {
   id: number;
   type: MessageType;
   text: string;
+  icon: string;
 }

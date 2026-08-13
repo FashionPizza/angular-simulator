@@ -1,0 +1,14 @@
+<section class="users">
+  <h1>Пользователи</h1>
+  <ul class="users__list">
+    @for (user of users; track user.id) {
+      <li class="users__item">
+        <strong>{{ user.name }}</strong>
+        <span>{{ user.email }}</span>
+        <em>{{ user.role }}</em>
+      </li>
+    } @empty {
+      <li>Пользователей нет</li>
+    }
+  </ul>
+</section>
