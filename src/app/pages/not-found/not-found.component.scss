@@ -1,0 +1,44 @@
+:host {
+  display: block;
+};
+
+.not-found {
+  width: 1180px;
+  min-height: 60vh;
+  margin: 220px auto 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding-top: 220px;
+  h1 {
+    margin: 0;
+    font-weight: 800;
+    font-size: 96px;
+    line-height: 100%;
+    color: #1A3E3E;
+  }
+  p {
+    margin: 0;
+    font-size: 18px;
+    color: #18121E;
+  }
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 240px;
+    height: 52px;
+    border-radius: 4px;
+    background: #1A3E3E;
+    color: #FDFDFD;
+    font-weight: 600;
+    font-size: 16px;
+    text-decoration: none;
+    transition: .3s;
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+}

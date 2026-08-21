@@ -8,30 +8,30 @@ import { MessageType } from '../enums/MessageType';
 export class MessageService {
 
   public messages: Message[] = [];
-
   private nextId = 1;
 
-  public showSuccess(): void {
-    this.addMessage(MessageType.Success, 'Успешное сообщение');
+  public showSuccess(text: string = 'Успешное сообщение'): void {
+    this.addMessage(MessageType.Success, text);
   }
 
-  public showInfo(): void {
-    this.addMessage(MessageType.Info, 'Информационное сообщение');
+  public showInfo(text: string = 'Информационное сообщение'): void {
+    this.addMessage(MessageType.Info, text);
   }
 
-  public showWarn(): void {
-    this.addMessage(MessageType.Warn, 'Предупреждение');
+  public showWarn(text: string = 'Предупреждение'): void {
+    this.addMessage(MessageType.Warn, text);
   }
 
-  public showError(): void {
-    this.addMessage(MessageType.Error, 'Ошибка');
+  public showError(text: string = 'Ошибка'): void {
+    this.addMessage(MessageType.Error, text);
   }
 
   private addMessage(type: MessageType, text: string): void {
     const message: Message = {
       id: this.nextId++,
       type,
-      text
+      text,
+      icon: this.getIcon(type)
     };
 
     this.messages.unshift(message);
@@ -43,5 +43,9 @@ export class MessageService {
 
   public closeMessage(id: number): void {
     this.messages = this.messages.filter(message => message.id !== id);
+  }
+
+  private getIcon(type: MessageType): string {
+    return '/images/messages/icon-message.png';
   }
 }
