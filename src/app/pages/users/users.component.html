@@ -1,14 +1,88 @@
 <section class="users">
-  <h1>Пользователи</h1>
-  <ul class="users__list">
-    @for (user of users; track user.id) {
-      <li class="users__item">
-        <strong>{{ user.name }}</strong>
-        <span>{{ user.email }}</span>
-        <em>{{ user.role }}</em>
-      </li>
-    } @empty {
-      <li>Пользователей нет</li>
+  <h1 class="users__title">Пользователи</h1>
+
+  @if ((users$ | async); as users) {
+    @if (users.length > 0) {
+      <div class="users__list">
+        @for (user of users; track user.id) {
+          <div class="users__card">
+            <div class="users__card-header">
+              <h3 class="users__name">{{ user.name }}</h3>
+              <span class="users__username">&#64;{{ user.username }}</span>
+            </div>
+
+            <div class="users__card-body">
+
+              <div class="users__section">
+                <div class="users__section-label">Контакты</div>
+                <div class="users__divider"></div>
+              </div>
+              <div class="users__row">
+                <span class="users__label">Эл. почта:</span>
+                <a class="users__value users__value--link" [href]="'mailto:' + user.email">{{ user.email }}</a>
+              </div>
+              <div class="users__row">
+                <span class="users__label">Телефон:</span>
+                <span class="users__value">{{ user.phone }}</span>
+              </div>
+              <div class="users__row">
+                <span class="users__label">Веб-сайт:</span>
+                <a class="users__value users__value--link" [href]="'https://' + user.website" target="_blank">{{ user.website }}</a>
+              </div>
+
+              <div class="users__section">
+                <div class="users__section-label">Адрес проживания</div>
+                <div class="users__divider"></div>
+              </div>
+              <div class="users__row">
+                <span class="users__label">Город:</span>
+                <span class="users__value">{{ user.address.city }}</span>
+              </div>
+              <div class="users__row">
+                <span class="users__label">Улица:</span>
+                <span class="users__value">{{ user.address.street }}</span>
+              </div>
+              <div class="users__row">
+                <span class="users__label">Офис:</span>
+                <span class="users__value">{{ user.address.suite }}</span>
+              </div>
+              <div class="users__row">
+                <span class="users__label">Индекс:</span>
+                <span class="users__value">{{ user.address.zipcode }}</span>
+              </div>
+              <div class="users__row">
+                <span class="users__label">Координаты:</span>
+                <span class="users__geo">
+                  <span class="users__geo-badge">{{ user.address.geo.lat }}</span>
+                  <span class="users__geo-badge">{{ user.address.geo.lng }}</span>
+                </span>
+              </div>
+
+              <div class="users__section">
+                <div class="users__section-label">Место работы</div>
+                <div class="users__divider"></div>
+              </div>
+              <div class="users__row">
+                <span class="users__label">Компания:</span>
+                <span class="users__value">{{ user.company.name }}</span>
+              </div>
+              <div class="users__row users__row--mission">
+                <span class="users__label">Миссия:</span>
+                <span class="users__value users__value--italic">«{{ user.company.catchPhrase }}»</span>
+              </div>
+              <div class="users__row">
+                <span class="users__label">Специализация:</span>
+                <span class="users__value">{{ user.company.bs }}</span>
+              </div>
+
+            </div>
+          </div>
+        }
+      </div>
+    } @else {
+      <div class="users__empty">
+        Нет пользователей для отображения
+      </div>
     }
-  </ul>
+  }
 </section>
