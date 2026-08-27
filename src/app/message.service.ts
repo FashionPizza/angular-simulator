@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Message } from '../enums/Message';
 import { MessageType } from '../enums/MessageType';
 
@@ -7,7 +8,9 @@ import { MessageType } from '../enums/MessageType';
 })
 export class MessageService {
 
-  public messages: Message[] = [];
+  private messagesSubject = new BehaviorSubject<Message[]>([]);
+  public messages$: Observable<Message[]> = this.messagesSubject.asObservable();
+
   private nextId = 1;
 
   public showSuccess(text: string = 'Успешное сообщение'): void {
@@ -34,7 +37,8 @@ export class MessageService {
       icon: this.getIcon(type)
     };
 
-    this.messages.unshift(message);
+    const current = this.messagesSubject.value;
+    this.messagesSubject.next([message, ...current]);
 
     setTimeout(() => {
       this.closeMessage(message.id);
@@ -42,7 +46,8 @@ export class MessageService {
   }
 
   public closeMessage(id: number): void {
-    this.messages = this.messages.filter(message => message.id !== id);
+    const current = this.messagesSubject.value;
+    this.messagesSubject.next(current.filter(message => message.id !== id));
   }
 
   private getIcon(type: MessageType): string {
