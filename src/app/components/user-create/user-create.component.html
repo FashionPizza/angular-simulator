@@ -1,0 +1,131 @@
+<form class="user-create" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <h2 class="user-create__title">Создать пользователя</h2>
+
+  <div class="user-create__section-label">Основная информация</div>
+
+  <div class="user-create__field">
+    <label class="user-create__label" for="user-create-name">Имя</label>
+    <input id="user-create-name" class="user-create__input" type="text" formControlName="name" placeholder="Введите имя" />
+    @if (form.get('name')?.invalid && form.get('name')?.touched) {
+      <span class="user-create__error">Допустимы только буквы, пробел и дефис</span>
+    }
+  </div>
+
+  <div class="user-create__field">
+    <label class="user-create__label" for="user-create-username">Никнейм</label>
+    <input id="user-create-username" class="user-create__input" type="text" formControlName="username" placeholder="Введите никнейм" />
+    @if (form.get('username')?.invalid && form.get('username')?.touched) {
+      <span class="user-create__error">Допустимы латинские буквы, цифры, "_", "." и "-"</span>
+    }
+  </div>
+
+  <div class="user-create__field">
+    <label class="user-create__label" for="user-create-email">Эл. почта</label>
+    <input id="user-create-email" class="user-create__input" type="email" formControlName="email" placeholder="example@mail.com" />
+    @if (form.get('email')?.invalid && form.get('email')?.touched) {
+      <span class="user-create__error">Введите корректный email</span>
+    }
+  </div>
+
+  <div class="user-create__field">
+    <label class="user-create__label" for="user-create-phone">Телефон</label>
+    <input id="user-create-phone" class="user-create__input" type="text" formControlName="phone" placeholder="+7 900 000-00-00" />
+    @if (form.get('phone')?.invalid && form.get('phone')?.touched) {
+      <span class="user-create__error">Допустимы только цифры и символы + - ( ) пробел</span>
+    }
+  </div>
+
+  <div class="user-create__field">
+    <label class="user-create__label" for="user-create-website">Веб-сайт</label>
+    <input id="user-create-website" class="user-create__input" type="text" formControlName="website" placeholder="example.com" />
+    @if (form.get('website')?.invalid && form.get('website')?.touched) {
+      <span class="user-create__error">Введите корректный адрес, например example.com</span>
+    }
+  </div>
+
+  <div class="user-create__section-label">Адрес</div>
+
+  <div formGroupName="address">
+    <div class="user-create__field">
+      <label class="user-create__label" for="user-create-city">Город</label>
+      <input id="user-create-city" class="user-create__input" type="text" formControlName="city" placeholder="Введите город" />
+      @if (form.get('address.city')?.invalid && form.get('address.city')?.touched) {
+        <span class="user-create__error">Допустимы только буквы, пробел и дефис</span>
+      }
+    </div>
+
+    <div class="user-create__field">
+      <label class="user-create__label" for="user-create-street">Улица</label>
+      <input id="user-create-street" class="user-create__input" type="text" formControlName="street" placeholder="Введите улицу" />
+      @if (form.get('address.street')?.invalid && form.get('address.street')?.touched) {
+        <span class="user-create__error">Недопустимые символы</span>
+      }
+    </div>
+
+    <div class="user-create__field">
+      <label class="user-create__label" for="user-create-suite">Офис / квартира</label>
+      <input id="user-create-suite" class="user-create__input" type="text" formControlName="suite" placeholder="Например, Apt. 12" />
+      @if (form.get('address.suite')?.invalid && form.get('address.suite')?.touched) {
+        <span class="user-create__error">Недопустимые символы</span>
+      }
+    </div>
+
+    <div class="user-create__field">
+      <label class="user-create__label" for="user-create-zipcode">Индекс</label>
+      <input id="user-create-zipcode" class="user-create__input" type="text" formControlName="zipcode" placeholder="Например, 123456" />
+      @if (form.get('address.zipcode')?.invalid && form.get('address.zipcode')?.touched) {
+        <span class="user-create__error">Индекс должен состоять из 4-10 цифр</span>
+      }
+    </div>
+
+    <div class="user-create__row" formGroupName="geo">
+      <div class="user-create__field">
+        <label class="user-create__label" for="user-create-lat">Широта</label>
+        <input id="user-create-lat" class="user-create__input" type="text" formControlName="lat" placeholder="Например, 55.7558" />
+        @if (form.get('address.geo.lat')?.invalid && form.get('address.geo.lat')?.touched) {
+          <span class="user-create__error">Введите число, например 55.7558</span>
+        }
+      </div>
+
+      <div class="user-create__field">
+        <label class="user-create__label" for="user-create-lng">Долгота</label>
+        <input id="user-create-lng" class="user-create__input" type="text" formControlName="lng" placeholder="Например, 37.6173" />
+        @if (form.get('address.geo.lng')?.invalid && form.get('address.geo.lng')?.touched) {
+          <span class="user-create__error">Введите число, например 37.6173</span>
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="user-create__section-label">Место работы</div>
+
+  <div formGroupName="company">
+    <div class="user-create__field">
+      <label class="user-create__label" for="user-create-company-name">Компания</label>
+      <input id="user-create-company-name" class="user-create__input" type="text" formControlName="name" placeholder="Введите название компании" />
+      @if (form.get('company.name')?.invalid && form.get('company.name')?.touched) {
+        <span class="user-create__error">Недопустимые символы</span>
+      }
+    </div>
+
+    <div class="user-create__field">
+      <label class="user-create__label" for="user-create-catch-phrase">Деятельность</label>
+      <input id="user-create-catch-phrase" class="user-create__input" type="text" formControlName="catchPhrase" placeholder="Введите деятельность компании" />
+      @if (form.get('company.catchPhrase')?.invalid && form.get('company.catchPhrase')?.touched) {
+        <span class="user-create__error">Недопустимые символы</span>
+      }
+    </div>
+
+    <div class="user-create__field">
+      <label class="user-create__label" for="user-create-bs">Специализация</label>
+      <input id="user-create-bs" class="user-create__input" type="text" formControlName="bs" placeholder="Введите специализацию" />
+      @if (form.get('company.bs')?.invalid && form.get('company.bs')?.touched) {
+        <span class="user-create__error">Недопустимые символы</span>
+      }
+    </div>
+  </div>
+
+  <button id="user-create-submit-btn" class="user-create__submit-btn" type="submit">
+    Создать пользователя
+  </button>
+</form>
