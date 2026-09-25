@@ -1,0 +1,32 @@
+:host {
+  display: block;
+};
+
+.users-filter {
+  box-sizing: border-box;
+  width: 1460px;
+  margin: 0 auto 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  &__label {
+    font-family: 'Nunito Sans';
+    font-weight: 700;
+    font-size: 14px;
+    color: #667C7C;
+  }
+  &__input {
+    box-sizing: border-box;
+    max-width: 400px;
+    padding: 10px 12px;
+    border: 1px solid #E2E8F0;
+    border-radius: 4px;
+    font-family: 'Nunito Sans';
+    font-size: 14px;
+    color: #1D3939;
+    &:focus {
+      outline: none;
+      border-color: #D4A373;
+    }
+  }
+};
