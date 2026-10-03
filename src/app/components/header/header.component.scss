@@ -140,6 +140,7 @@
 };
 
 .header__actions {
+  background: var(--p-primary-500);
   position: absolute;
   top: 8px;
   right: 0;
@@ -165,6 +166,24 @@
   cursor: pointer;
   font-weight: 600;
   color: #18121E;
+};
+
+.header__theme {
+  position: absolute;
+  top: 84px;
+  right: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 110;
+};
+
+.header__theme ::ng-deep .p-togglebutton {
+  min-width: 64px;
+  height: 32px;
+  box-sizing: border-box;
+  justify-content: center;
+  padding: 0 0.75rem;
 };
 
 .live-input {
@@ -194,3 +213,9 @@
   font-size: 14px;
   white-space: nowrap;
 };
+
+:host-context(.app-dark) {
+  .header {
+    background: rgba(13, 8, 18, 0.85);
+  }
+}

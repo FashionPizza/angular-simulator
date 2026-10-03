@@ -36,7 +36,7 @@
       <ul class="information__socials">
         @for (social of socials; track social.icon) {
           <li class="information__social">
-            <a [href]="social.link"><img [src]="social.icon" [alt]="social.name" /></a>
+            <a [href]="social.link"><fa-icon [icon]="social.icon" [attr.aria-label]="social.name" /></a>
           </li>
         }
       </ul>
@@ -47,7 +47,7 @@
       <ul class="information__list">
         @for (service of services; track service.text) {
           <li class="information__item">
-            <span class="information__item-icon"><img [src]="service.icon" alt="" /></span>
+            <span class="information__item-icon"><fa-icon [icon]="service.icon" /></span>
             <span class="information__item-text">{{ service.text }}</span>
           </li>
         }
@@ -59,7 +59,7 @@
       <ul class="information__list">
         @for (info of travelInfo; track info.text) {
           <li class="information__item">
-            <span class="information__item-icon"><img [src]="info.icon" alt="" /></span>
+            <span class="information__item-icon"><fa-icon [icon]="info.icon" /></span>
             <span class="information__item-text">{{ info.text }}</span>
           </li>
         }

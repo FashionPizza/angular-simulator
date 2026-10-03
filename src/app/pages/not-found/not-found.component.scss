@@ -42,3 +42,14 @@
     }
   }
 };
+
+:host-context(.app-dark) {
+  .not-found {
+    h1 {
+      color: #D4A373;
+    }
+    p {
+      color: #F3F5F4;
+    }
+  }
+}

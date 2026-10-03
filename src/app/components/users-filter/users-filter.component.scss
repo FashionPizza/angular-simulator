@@ -30,3 +30,15 @@
     }
   }
 };
+
+:host-context(.app-dark) {
+  .users-filter__label {
+    color: #9C92A8;
+  }
+
+  .users-filter__input {
+    background: #312540;
+    border-color: #4A3C5A;
+    color: #F3F5F4;
+  }
+}
