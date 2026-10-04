@@ -41,3 +41,13 @@
     text-align: center;
   }
 };
+
+:host-context(.app-dark) {
+  .users {
+    background: #18121E;
+  }
+
+  .users__title {
+    color: #F3F5F4;
+  }
+}

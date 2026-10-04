@@ -2,13 +2,13 @@
   <div class="messages">
     @for (message of messages; track message.id) {
       <div class="message-card">
-        <img class="message-card__icon" src="/images/messages/icon-message.png" [alt]="message.type" />
+        <fa-icon class="message-card__icon" [icon]="getIconByType(message.type)" />
         <div class="message-card__content">
           <div class="message-card__type">{{ message.type }}</div>
           <div class="message-card__text">{{ message.text }}</div>
         </div>
         <button class="message-card__delete" (click)="messageService.closeMessage(message.id)">
-          <img src="/images/messages/icon-delete.png" alt="Закрыть" />
+          <fa-icon icon="xmark" />
         </button>
       </div>
     }

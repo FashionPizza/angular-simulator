@@ -141,3 +141,35 @@
     }
   }
 };
+
+:host-context(.app-dark) {
+  .user-card {
+    background: #312540;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  }
+
+  .user-card__name,
+  .user-card__section-label,
+  .user-card__value {
+    color: #F3F5F4;
+  }
+
+  .user-card__value--link {
+    color: #D4A373;
+  }
+
+  .user-card__value--italic,
+  .user-card__label {
+    color: #9C92A8;
+  }
+
+  .user-card__divider {
+    background: #4A3C5A;
+  }
+
+  .user-card__geo-badge {
+    background: #18121E;
+    border-color: #4A3C5A;
+    color: #F3F5F4;
+  }
+}

@@ -13,11 +13,17 @@
   position: relative;
   width: 1920px;
   height: 985px;
-  background-image: url('/images/mountain-bg.png');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
   overflow: hidden;
+    &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('/images/mountain-bg.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    z-index: 0;
+  }
 };
 
 .hero__title {
@@ -144,12 +150,14 @@
     color: #fff;
     padding-right: 30px;
   }
-  img {
+  fa-icon {
     position: absolute;
     right: 16px;
     top: 50%;
     transform: translateY(-50%);
     pointer-events: none;
+    font-size: 16px;
+    color: #fff;
   }
 };
 
@@ -227,10 +235,9 @@
     justify-content: center;
     align-items: center;
     z-index: 3;
-    img {
-      width: 13.73px;
-      height: 15.17px;
-      display: block;
+    fa-icon {
+      font-size: 16px;
+      color: #18121E;
     }
   }
   &__content {
@@ -344,20 +351,9 @@
     flex-direction: column;
     gap: 40px;
   }
-  &__item {
-    width: 580px;
-    height: 64px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    transition: .3s;
-    &:hover {
-      transform: scale(1.03);
-    }
-    img {
-      width: 50px;
-      height: 50px;
-    }
+  fa-icon {
+    font-size: 50px;
+    color: #1A3E3E;
   }
   &__item-content {
     width: 514px;
@@ -385,6 +381,7 @@
     color: #000;
   }
   &__button {
+    flex-shrink: 0;
     width: 236px;
     height: 52px;
     margin-top: 40px;
@@ -514,9 +511,9 @@
     display: flex;
     align-items: center;
     gap: 4px;
-    img {
-      width: 24px;
-      height: 24px;
+    fa-icon {
+      font-size: 20px;
+      color: #1A3E3E;
     }
     span {
       font-weight: 700;
@@ -836,3 +833,59 @@
     }
   }
 };
+
+:host-context(.app-dark) {
+  .about__title,
+  .about__text {
+    color: #F3F5F4;
+  }
+
+  .programs {
+    background: #241A2E;
+  }
+
+  .programs fa-icon {
+    color: #D4A373;
+  }
+
+  .programs__title,
+  .programs__text,
+  .programs__item-title {
+    color: #F3F5F4;
+  }
+
+  .programs__item-text {
+    color: #C9CDD2;
+  }
+
+  .destinations__title {
+    color: #F3F5F4;
+  }
+
+  .blog {
+    background: #241A2E;
+  }
+
+  .blog__card {
+    background: #312540;
+    box-shadow: none;
+  }
+
+  .blog__card:hover {
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+  }
+
+  .blog__title,
+  .blog__card-title,
+  .blog__card-text {
+    color: #F3F5F4;
+  }
+
+  .blog__link {
+    color: #D4A373;
+  }
+
+  .moments__title {
+    color: #F3F5F4;
+  }
+}

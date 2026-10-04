@@ -85,3 +85,25 @@
     }
   }
 };
+
+:host-context(.app-dark) {
+  .user-create {
+    background: #241A2E;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  }
+
+  .user-create__title,
+  .user-create__section-label {
+    color: #F3F5F4;
+  }
+
+  .user-create__label {
+    color: #9C92A8;
+  }
+
+  .user-create__input {
+    background: #312540;
+    border-color: #4A3C5A;
+    color: #F3F5F4;
+  }
+}

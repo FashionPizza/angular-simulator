@@ -19,12 +19,7 @@
   &__icon {
     width: 80px;
     height: 80px;
-    filter: brightness(0) invert(1);
-    animation: loader-spin 0.5s linear infinite;
+    font-size: 80px;
+    color: #FFFFFF;
   }
 };
-
-@keyframes loader-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}

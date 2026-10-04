@@ -43,4 +43,26 @@
       <span class="live-text">{{ liveText }}</span>
     </div>
   </div>
+
+  <div class="header__theme">
+    <p-selectbutton
+      [options]="presetOptions"
+      optionLabel="label"
+      optionValue="value"
+      [allowEmpty]="false"
+      ariaLabel="Выбор темы оформления"
+      [ngModel]="(themeService.preset$ | async)"
+      (onChange)="onPresetChange($event.value)"
+    />
+    <p-toggleswitch
+      inputId="theme-toggle"
+      ariaLabel="Тёмный режим"
+      [ngModel]="(themeService.colorMode$ | async) === colorMode.Dark"
+      (onChange)="onColorModeChange($event.checked)"
+    >
+      <ng-template #handle let-checked="checked">
+        <fa-icon [icon]="checked ? 'moon' : 'sun'" />
+      </ng-template>
+    </p-toggleswitch>
+  </div>
 </header>

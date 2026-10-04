@@ -28,6 +28,11 @@
       width: 40px;
       height: 40px;
       flex-shrink: 0;
+      font-size: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #E8E9EB;
     }
     .message-card__content {
       flex: 1;
@@ -59,9 +64,9 @@
       background: transparent;
       border: none;
       cursor: pointer;
-      img {
-        width: 20px;
-        height: 20px;
+      color: #E8E9EB;
+      fa-icon {
+        font-size: 16px;
       }
     }
   }

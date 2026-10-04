@@ -15,7 +15,7 @@
               <option value="forest">Лес</option>
               <option value="lake">Озеро</option>
             </select>
-            <img src="/images/arrow-down.svg" alt="" />
+            <fa-icon icon="chevron-down" />
           </div>
           <div class="field__hint">выберите из списка</div>
         </div>
@@ -23,7 +23,7 @@
         <div class="field">
           <div class="field__input">
             <input type="date" [(ngModel)]="date" />
-            <img src="/images/date.svg" alt="" />
+            <fa-icon icon="calendar-days" />
           </div>
           <div class="field__hint">укажите дату</div>
         </div>
@@ -37,7 +37,7 @@
               <option value="3">3 человека</option>
               <option value="4">4 человека</option>
             </select>
-            <img src="/images/arrow-down.svg" alt="" />
+            <fa-icon icon="chevron-down" />
           </div>
           <div class="field__hint">выберите из списка</div>
         </div>
@@ -60,7 +60,7 @@
         <img src="/images/nature-first.svg" alt="Природа" />
       </div>
       <div class="about__play">
-        <img src="/images/play-arrow.svg" alt="Смотреть видео" />
+        <fa-icon icon="play" [attr.aria-label]="'Смотреть видео'" />
       </div>
     </div>
 
@@ -91,7 +91,7 @@
       <div class="programs__items">
         @for (item of programs; track item.title) {
           <div class="programs__item">
-            <img [src]="item.icon" [alt]="item.title" />
+            <fa-icon [icon]="item.icon" [attr.aria-label]="item.title" />
             <div class="programs__item-content">
               <div class="programs__item-title">{{ item.title }}</div>
               <div class="programs__item-text">{{ item.text }}</div>
@@ -136,7 +136,7 @@
 
           <div class="destinations__rating">
             <div class="destinations__rating-content">
-              <img src="/images/rating-star.svg" alt="Рейтинг" />
+              <fa-icon icon="star" [attr.aria-label]="'Рейтинг'" />
               <span>{{ destination.rating }}</span>
             </div>
           </div>
