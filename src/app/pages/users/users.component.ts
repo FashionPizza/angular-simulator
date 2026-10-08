@@ -7,11 +7,13 @@ import { UserService } from '../../user.service';
 import { UserCardComponent } from '../../components/user-card/user-card.component';
 import { UserCreateComponent } from '../../components/user-create/user-create.component';
 import { UsersFilterComponent } from '../../components/users-filter/users-filter.component';
+import { PluralPipe } from '../../pipes/plural.pipe';
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [CommonModule, UserCardComponent, UserCreateComponent, UsersFilterComponent],
+  imports: [CommonModule, UserCardComponent, UserCreateComponent,
+    UsersFilterComponent,PluralPipe ],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss',
 })
