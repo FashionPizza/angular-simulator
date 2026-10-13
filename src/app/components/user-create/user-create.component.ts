@@ -2,11 +2,13 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { User } from '../../../enums/User';
+import { HoverBoldDirective } from '../../directives/hover-bold.directive';
+import { GradientBorderDirective } from '../../directives/gradient-border.directive';
 
 @Component({
   selector: 'app-user-create',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, HoverBoldDirective, GradientBorderDirective ],
   templateUrl: './user-create.component.html',
   styleUrl: './user-create.component.scss',
 })

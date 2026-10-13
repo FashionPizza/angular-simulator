@@ -1,6 +1,6 @@
-<div class="user-card">
+<div class="user-card" appGradientBorder>
   <div class="user-card__header">
-    <h3 class="user-card__name">{{ user.name || 'Неизвестно' }}</h3>
+    <h3 class="user-card__name">{{ user.name ? (user.name | uppercase) : 'Неизвестно' }}</h3>
     <span class="user-card__username">&#64;{{ user.username || 'Неизвестно' }}</span>
   </div>
 
@@ -20,7 +20,7 @@
     </div>
     <div class="user-card__row">
       <span class="user-card__label">Телефон:</span>
-      <span class="user-card__value">{{ user.phone || 'Неизвестно' }}</span>
+      <span class="user-card__value">{{ (user.phone || 'Неизвестно') | phone: 'compact' }}</span>
     </div>
     <div class="user-card__row">
       <span class="user-card__label">Веб-сайт:</span>
@@ -87,6 +87,7 @@
       [id]="'user-card-delete-btn-' + user.id"
       type="button"
       class="user-card__delete-btn"
+      [appHoverBold]="'1000'"
       (click)="onDeleteClick()"
     >
       Удалить пользователя

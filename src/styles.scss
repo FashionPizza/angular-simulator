@@ -50,3 +50,35 @@ html.app-dark body {
   background-color: #18121E;
   color: #F3F5F4;
 }
+
+.app-gradient-border {
+  position: relative;
+}
+
+.app-gradient-border::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: var(--gb-thickness, 2px);
+  background: linear-gradient(90deg, var(--gb-colors, #F2BE22, #D4A373, #B15757, #F2BE22));
+  background-size: 300% 100%;
+  background-repeat: no-repeat;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.app-gradient-border--active::after {
+  opacity: 1;
+  animation: gradient-border-flow 2s linear infinite;
+}
+
+@keyframes gradient-border-flow {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
