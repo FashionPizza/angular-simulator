@@ -1,0 +1,52 @@
+<section class="posts">
+  <div class="posts__header">
+    <h1 class="posts__title">Посты</h1>
+    <p-button label="Создать пост" icon="pi pi-plus" (onClick)="goCreate()" />
+  </div>
+
+  <p-table
+    [value]="posts()"
+    dataKey="id"
+    [loading]="loading()"
+    [lazy]="true"
+    [totalRecords]="totalRecords"
+    [paginator]="true"
+    [rows]="pageSize"
+    [rowsPerPageOptions]="pageSizes"
+    [first]="first"
+    (onPage)="onPageChange($event)"
+    paginatorLocale="ru"
+    currentPageReportTemplate="Записи {first}–{last} из {totalRecords}"
+    [showCurrentPageReport]="true"
+    [(contextMenuSelection)]="selectedPost"
+    [contextMenu]="cm"
+    (onContextMenuSelect)="onContextMenuSelect($event.data)"
+  >
+    <ng-template #header>
+      <tr>
+        <th>Заголовок</th>
+        <th>Теги</th>
+        <th>Просмотры</th>
+      </tr>
+    </ng-template>
+
+    <ng-template #loadingbody>
+      <tr>
+        <td><p-skeleton /></td>
+        <td><p-skeleton /></td>
+        <td><p-skeleton /></td>
+      </tr>
+    </ng-template>
+
+    <ng-template #body let-post>
+      <tr [pContextMenuRow]="post" (dblclick)="onRowDblclick(post)">
+        <td>{{ post.title }}</td>
+        <td>{{ post.tags.join(', ') }}</td>
+        <td>{{ post.views }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <p-contextMenu #cm [model]="menuItems" />
+
+</section>

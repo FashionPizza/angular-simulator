@@ -42,6 +42,7 @@ export class HeaderComponent implements OnDestroy {
   public navItems: NavItem[] = [
     { label: 'Главная', path: '/', exact: true },
     { label: 'Пользователи', path: '/users', exact: false },
+    { label: 'Посты', path: '/posts', exact: false },
   ];
 
   private timerId: ReturnType<typeof setInterval>;

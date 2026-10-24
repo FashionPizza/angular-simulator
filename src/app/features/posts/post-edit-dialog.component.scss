@@ -1,0 +1,45 @@
+.post-edit {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  &__label {
+    font-weight: 700;
+    font-size: 14px;
+    color: #667C7C;
+  }
+  &__input {
+    box-sizing: border-box;
+    padding: 10px 12px;
+    border: 1px solid #E2E8F0;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #1D3939;
+    &:focus {
+      outline: none;
+      border-color: #D4A373;
+    }
+  }
+  &__textarea {
+    resize: vertical;
+  }
+  &__error {
+    font-size: 12px;
+    color: #B15757;
+  }
+};
+
+:host-context(.app-dark) {
+  .post-edit__label {
+    color: #9C92A8;
+  }
+  .post-edit__input {
+    background: #312540;
+    border-color: #4A3C5A;
+    color: #F3F5F4;
+  }
+}
