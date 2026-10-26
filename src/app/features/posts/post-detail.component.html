@@ -1,0 +1,14 @@
+@if (post(); as p) {
+  <article class="post-detail">
+    <h1 class="post-detail__title">{{ p.title }}</h1>
+    <div class="post-detail__meta">
+      <span class="post-detail__badge"><i class="pi pi-eye"></i> {{ p.views }}</span>
+            <span class="post-detail__badge"><i class="pi pi-thumbs-up"></i> {{ p.reactions.likes }}</span>
+      @for (tag of p.tags; track tag) {
+        <span class="post-detail__tag">{{ tag }}</span>
+      }
+    </div>
+    <p class="post-detail__body">{{ p.body }}</p>
+    <p-button label="Назад к постам" icon="pi pi-arrow-left" severity="secondary" (onClick)="goBack()" />
+  </article>
+}

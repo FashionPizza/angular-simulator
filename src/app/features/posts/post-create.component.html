@@ -1,0 +1,36 @@
+<section class="post-create">
+  <h1 class="post-create__title">Создать пост</h1>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="post-create__form">
+    <div class="post-create__field">
+      <label class="post-create__label" for="post-create-title">Заголовок</label>
+      <input id="post-create-title" class="post-create__input" type="text" formControlName="title" placeholder="Введите заголовок" />
+      @if (form.get('title')?.invalid && form.get('title')?.touched) {
+        <span class="post-create__error">Минимум 5 символов</span>
+      }
+    </div>
+
+    <div class="post-create__field">
+      <label class="post-create__label" for="post-create-body">Текст поста</label>
+      <textarea id="post-create-body" class="post-create__input post-create__textarea" rows="8" formControlName="body" placeholder="Введите текст"></textarea>
+      @if (form.get('body')?.invalid && form.get('body')?.touched) {
+        <span class="post-create__error">Минимум 10 символов</span>
+      }
+    </div>
+
+    <div class="post-create__field">
+      <label class="post-create__label" for="post-create-views">Просмотры</label>
+      <p-inputnumber inputId="post-create-views" formControlName="views" [min]="0" />
+    </div>
+
+    <div class="post-create__field">
+      <label class="post-create__label" for="post-create-tags">Теги (через запятую)</label>
+      <input id="post-create-tags" class="post-create__input" type="text" formControlName="tags" placeholder="news, travel" />
+    </div>
+
+    <div class="post-create__actions">
+      <p-button label="Создать" icon="pi pi-check" (onClick)="onSubmit()" />
+      <p-button label="Отмена" severity="secondary" (onClick)="cancel()" />
+    </div>
+  </form>
+</section>

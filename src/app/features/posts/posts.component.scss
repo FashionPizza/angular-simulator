@@ -1,0 +1,27 @@
+:host {
+  display: block;
+};
+
+.posts {
+  width: 1460px;
+  margin: 0 auto 100px;
+  padding-top: 220px;
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+  &__title {
+    margin: 0;
+    font-weight: 800;
+    font-size: 48px;
+    color: #1D3939;
+  }
+};
+
+:host-context(.app-dark) {
+  .posts__title {
+    color: #F3F5F4;
+  }
+}
