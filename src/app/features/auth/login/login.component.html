@@ -1,0 +1,22 @@
+<section class="login">
+  <h1>Вход</h1>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="login-form">
+    <label>
+      Логин
+      <input pInputText formControlName="username" autocomplete="username" />
+    </label>
+
+    <label>
+      Пароль
+      <input
+        pInputText
+        type="password"
+        formControlName="password"
+        autocomplete="current-password"
+      />
+    </label>
+
+    <p-button label="Войти" [loading]="submitting()" (onClick)="onSubmit()" />
+  </form>
+</section>

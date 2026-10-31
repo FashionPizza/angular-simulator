@@ -1,13 +1,15 @@
-import { Component, OnDestroy, signal } from '@angular/core';
+import { Component, OnDestroy, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ButtonModule } from 'primeng/button';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { ThemeService } from '../../theme.service';
 import { ColorMode } from '../../../enums/ColorMode';
 import { ThemePreset } from '../../../enums/ThemePreset';
+import { AuthService } from '../../features/auth/auth.service';
 
 interface NavItem {
   label: string;
@@ -19,7 +21,7 @@ interface NavItem {
   selector: 'app-header',
   standalone: true,
   imports: [CommonModule, FormsModule, RouterLink, RouterLinkActive, FontAwesomeModule,
-    ToggleSwitchModule, SelectButtonModule],
+    ButtonModule, ToggleSwitchModule, SelectButtonModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
@@ -45,6 +47,11 @@ export class HeaderComponent implements OnDestroy {
     { label: 'Посты', path: '/posts', exact: false },
   ];
 
+  private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
+
+  public readonly user = this.authService.user;
+
   private timerId: ReturnType<typeof setInterval>;
 
   public constructor(public themeService: ThemeService) {
@@ -63,6 +70,11 @@ export class HeaderComponent implements OnDestroy {
 
   public onPresetChange(preset: ThemePreset): void {
     this.themeService.setPreset(preset);
+  }
+
+  public onLogout(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 
   private updateDate(): void {
