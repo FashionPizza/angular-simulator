@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
-import { Observable, catchError, of, tap } from 'rxjs';
+import { Observable, catchError, of, switchMap, tap } from 'rxjs';
 import { IAuth, IAuthUser } from './i-auth';
 
 const ACCESS_TOKEN_KEY = 'auth-access-token';
@@ -27,14 +27,18 @@ export class AuthService {
     return localStorage.getItem(REFRESH_TOKEN_KEY);
   }
 
-  public login(data: { username: string; password: string }): Observable<IAuth> {
+  public login(data: { username: string; password: string }): Observable<IAuthUser> {
     return this.http
       .post<IAuth>(`${this.baseUrl}/login`, {
         username: data.username,
         password: data.password,
         expiresInMins: 60,
       })
-      .pipe(tap((response) => this.setSession(response)));
+      .pipe(
+        tap((response) => this.setSession(response)),
+        switchMap(() => this.http.get<IAuthUser>(`${this.baseUrl}/me`)),
+        tap((user) => this.user.set(user)),
+      );
   }
 
   public refresh(refreshToken: string): Observable<IRefreshResponse> {
