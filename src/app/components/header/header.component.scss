@@ -214,6 +214,23 @@
   white-space: nowrap;
 };
 
+.header__session {
+  position: absolute;
+  top: 32px;
+  left: 16px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 110;
+}
+
+.header__user {
+  color: #FDFDFD;
+  font-weight: 600;
+  white-space: nowrap;
+};
+
 :host-context(.app-dark) {
   .header {
     background: rgba(13, 8, 18, 0.85);

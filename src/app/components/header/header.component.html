@@ -1,4 +1,10 @@
 <header class="header">
+  @if (user(); as currentUser) {
+    <div class="header__session">
+      <span class="header__user">{{ currentUser.firstName }} {{ currentUser.lastName }}</span>
+      <p-button label="Выйти" severity="danger" text="true" (onClick)="onLogout()" />
+    </div>
+  }
   <div class="header__container">
     <a class="header__logo" routerLink="/">
       <img src="/images/logo-icon.svg" alt="Логотип" />
