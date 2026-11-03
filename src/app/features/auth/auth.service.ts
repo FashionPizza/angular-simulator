@@ -64,7 +64,7 @@ export class AuthService {
     }
 
     return this.http.get<IAuthUser>(`${this.baseUrl}/me`).pipe(
-      tap((user) => this.user.set(user)),
+      tap((user) => this.user.set(this.mapUser(user))),
       catchError(() => {
         this.logout();
         return of(null);
@@ -78,17 +78,21 @@ export class AuthService {
     this.user.set(null);
   }
 
+  private mapUser(me: IAuthUser): IAuthUser {
+    return {
+      id: me.id,
+      username: me.username,
+      email: me.email,
+      firstName: me.firstName,
+      lastName: me.lastName,
+      gender: me.gender,
+      image: me.image,
+      role: me.role,
+    };
+  }
+
   private setSession(auth: IAuth): void {
     localStorage.setItem(ACCESS_TOKEN_KEY, auth.accessToken);
-    localStorage.setItem(REFRESH_TOKEN_KEY, auth.refreshToken);
-    this.user.set({
-      id: auth.id,
-      username: auth.username,
-      email: auth.email,
-      firstName: auth.firstName,
-      lastName: auth.lastName,
-      gender: auth.gender,
-      image: auth.image,
-    });
+    localStorage.setItem(REFRESH_TOKEN_KEY, auth.refreshToken);    
   }
 }
