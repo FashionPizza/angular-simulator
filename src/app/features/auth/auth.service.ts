@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
-import { Observable, catchError, of, tap } from 'rxjs';
+import { Observable, catchError, of, switchMap, tap } from 'rxjs';
 import { IAuth, IAuthUser } from './i-auth';
 
 const ACCESS_TOKEN_KEY = 'auth-access-token';
@@ -27,14 +27,18 @@ export class AuthService {
     return localStorage.getItem(REFRESH_TOKEN_KEY);
   }
 
-  public login(data: { username: string; password: string }): Observable<IAuth> {
+  public login(data: { username: string; password: string }): Observable<IAuthUser> {
     return this.http
       .post<IAuth>(`${this.baseUrl}/login`, {
         username: data.username,
         password: data.password,
         expiresInMins: 60,
       })
-      .pipe(tap((response) => this.setSession(response)));
+      .pipe(
+        tap((response) => this.setSession(response)),
+        switchMap(() => this.http.get<IAuthUser>(`${this.baseUrl}/me`)),
+        tap((user) => this.user.set(user)),
+      );
   }
 
   public refresh(refreshToken: string): Observable<IRefreshResponse> {
@@ -60,7 +64,7 @@ export class AuthService {
     }
 
     return this.http.get<IAuthUser>(`${this.baseUrl}/me`).pipe(
-      tap((user) => this.user.set(user)),
+      tap((user) => this.user.set(this.mapUser(user))),
       catchError(() => {
         this.logout();
         return of(null);
@@ -74,17 +78,21 @@ export class AuthService {
     this.user.set(null);
   }
 
+  private mapUser(me: IAuthUser): IAuthUser {
+    return {
+      id: me.id,
+      username: me.username,
+      email: me.email,
+      firstName: me.firstName,
+      lastName: me.lastName,
+      gender: me.gender,
+      image: me.image,
+      role: me.role,
+    };
+  }
+
   private setSession(auth: IAuth): void {
     localStorage.setItem(ACCESS_TOKEN_KEY, auth.accessToken);
-    localStorage.setItem(REFRESH_TOKEN_KEY, auth.refreshToken);
-    this.user.set({
-      id: auth.id,
-      username: auth.username,
-      email: auth.email,
-      firstName: auth.firstName,
-      lastName: auth.lastName,
-      gender: auth.gender,
-      image: auth.image,
-    });
+    localStorage.setItem(REFRESH_TOKEN_KEY, auth.refreshToken);    
   }
 }

@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './features/auth/auth.guard';
+import { adminGuard } from './features/auth/admin.guard';
 import { postResolver } from './features/posts/post.resolver';
 
 export const routes: Routes = [
@@ -17,26 +18,26 @@ export const routes: Routes = [
   },
   {
     path: 'users',
-    canActivate: [authGuard],
+    canActivate: [authGuard, adminGuard],
     loadComponent: () => import('./pages/users/users.component').then((m) => m.UsersComponent),
     title: 'Пользователи',
   },
   {
     path: 'posts/create',
-    canActivate: [authGuard],
+    canActivate: [authGuard, adminGuard],
     loadComponent: () =>
       import('./features/posts/post-create.component').then((m) => m.PostCreateComponent),
     title: 'Создать пост',
   },
   {
     path: 'posts',
-    canActivate: [authGuard],
+    canActivate: [authGuard, adminGuard],
     loadComponent: () => import('./features/posts/posts.component').then((m) => m.PostsComponent),
     title: 'Посты',
   },
   {
     path: 'posts/:id',
-    canActivate: [authGuard],
+    canActivate: [authGuard, adminGuard],
     loadComponent: () =>
       import('./features/posts/post-detail.component').then((m) => m.PostDetailComponent),
     resolve: { post: postResolver },

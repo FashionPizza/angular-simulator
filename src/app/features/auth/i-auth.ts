@@ -8,6 +8,7 @@ export interface IAuth {
   lastName: string;
   gender: string;
   image: string;
+  role?: string;
 }
 
 export type IAuthUser = Omit<IAuth, 'accessToken' | 'refreshToken'>;
