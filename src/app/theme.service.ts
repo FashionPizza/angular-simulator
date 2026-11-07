@@ -15,18 +15,18 @@ const DEFAULT_PRESET = ThemePreset.Aura;
 const DARK_MODE_CLASS = 'app-dark';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ThemeService {
   private localStorageService = inject(LocalStorageService);
   private primeng = inject(PrimeNG);
 
   private colorModeSubject = new BehaviorSubject<ColorMode>(
-    this.localStorageService.get<ColorMode>(COLOR_MODE_STORAGE_KEY) ?? DEFAULT_COLOR_MODE
+    this.localStorageService.get<ColorMode>(COLOR_MODE_STORAGE_KEY) ?? DEFAULT_COLOR_MODE,
   );
 
   private presetSubject = new BehaviorSubject<ThemePreset>(
-    this.localStorageService.get<ThemePreset>(PRESET_STORAGE_KEY) ?? DEFAULT_PRESET
+    this.localStorageService.get<ThemePreset>(PRESET_STORAGE_KEY) ?? DEFAULT_PRESET,
   );
 
   public colorMode$: Observable<ColorMode> = this.colorModeSubject.asObservable();

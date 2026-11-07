@@ -8,9 +8,9 @@
       <div class="subscribe__right">
         <div class="subscribe__form">
           <div class="subscribe__field">
-            <label class="subscribe__label">Введите e-mail адрес</label>
+            <label class="subscribe__label" for="subscribe-email">Введите e-mail адрес</label>
             <div class="subscribe__input-wrapper">
-              <input class="subscribe__input" type="email" placeholder="name@domain.com" [(ngModel)]="email" />
+              <input class="subscribe__input" type="email" id="subscribe-email" placeholder="name@domain.com" [(ngModel)]="email" />
             </div>
           </div>
           <button class="subscribe__button" type="button" (click)="onSubscribe()">Консультация</button>

@@ -93,6 +93,6 @@ export class AuthService {
 
   private setSession(auth: IAuth): void {
     localStorage.setItem(ACCESS_TOKEN_KEY, auth.accessToken);
-    localStorage.setItem(REFRESH_TOKEN_KEY, auth.refreshToken);    
+    localStorage.setItem(REFRESH_TOKEN_KEY, auth.refreshToken);
   }
 }

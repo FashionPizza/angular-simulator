@@ -20,12 +20,22 @@ interface NavItem {
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, RouterLinkActive, FontAwesomeModule,
-    ButtonModule, ToggleSwitchModule, SelectButtonModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterLink,
+    RouterLinkActive,
+    FontAwesomeModule,
+    ButtonModule,
+    ToggleSwitchModule,
+    SelectButtonModule,
+  ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent implements OnDestroy {
+  themeService = inject(ThemeService);
+
   public companyName = 'РУМТИБЕТ';
   public clickCount = 0;
   public currentDate = signal('');
@@ -54,15 +64,23 @@ export class HeaderComponent implements OnDestroy {
 
   private timerId: ReturnType<typeof setInterval>;
 
-  public constructor(public themeService: ThemeService) {
+  public constructor() {
     this.updateDate();
     this.timerId = setInterval(() => this.updateDate(), 1000);
   }
 
-  public toggleHeaderInfo(): void { this.showTimer = !this.showTimer; }
-  public increase(): void { this.clickCount++; }
-  public decrease(): void { if (this.clickCount > 0) this.clickCount--; }
-  public ngOnDestroy(): void { clearInterval(this.timerId); }
+  public toggleHeaderInfo(): void {
+    this.showTimer = !this.showTimer;
+  }
+  public increase(): void {
+    this.clickCount++;
+  }
+  public decrease(): void {
+    if (this.clickCount > 0) this.clickCount--;
+  }
+  public ngOnDestroy(): void {
+    clearInterval(this.timerId);
+  }
 
   public onColorModeChange(isDark: boolean): void {
     this.themeService.setColorMode(isDark ? ColorMode.Dark : ColorMode.Light);

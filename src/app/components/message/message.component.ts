@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MessageService } from '../../message.service';
@@ -12,7 +12,7 @@ import { MessageType } from '../../../enums/MessageType';
   styleUrl: './message.component.scss',
 })
 export class MessageComponent {
-  public constructor(public messageService: MessageService) {}
+  messageService = inject(MessageService);
 
   public getIconByType(type: MessageType): string {
     switch (type) {

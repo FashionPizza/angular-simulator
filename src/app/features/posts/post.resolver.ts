@@ -30,6 +30,6 @@ export const postResolver: ResolveFn<IPost | null> = (route) => {
       router.navigate(['/posts']);
       return of(null);
     }),
-    finalize(() => loaderService.hideLoader())
+    finalize(() => loaderService.hideLoader()),
   );
 };

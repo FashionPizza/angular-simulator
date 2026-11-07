@@ -4,28 +4,27 @@ import { Message } from '../enums/Message';
 import { MessageType } from '../enums/MessageType';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MessageService {
-
   private messagesSubject = new BehaviorSubject<Message[]>([]);
   public messages$: Observable<Message[]> = this.messagesSubject.asObservable();
 
   private nextId = 1;
 
-  public showSuccess(text: string = 'Успешное сообщение'): void {
+  public showSuccess(text = 'Успешное сообщение'): void {
     this.addMessage(MessageType.Success, text);
   }
 
-  public showInfo(text: string = 'Информационное сообщение'): void {
+  public showInfo(text = 'Информационное сообщение'): void {
     this.addMessage(MessageType.Info, text);
   }
 
-  public showWarn(text: string = 'Предупреждение'): void {
+  public showWarn(text = 'Предупреждение'): void {
     this.addMessage(MessageType.Warn, text);
   }
 
-  public showError(text: string = 'Ошибка'): void {
+  public showError(text = 'Ошибка'): void {
     this.addMessage(MessageType.Error, text);
   }
 
@@ -34,7 +33,7 @@ export class MessageService {
       id: this.nextId++,
       type,
       text,
-      icon: this.getIcon(type)
+      icon: this.getIcon(),
     };
 
     const current = this.messagesSubject.value;
@@ -47,10 +46,10 @@ export class MessageService {
 
   public closeMessage(id: number): void {
     const current = this.messagesSubject.value;
-    this.messagesSubject.next(current.filter(message => message.id !== id));
+    this.messagesSubject.next(current.filter((message) => message.id !== id));
   }
 
-  private getIcon(type: MessageType): string {
+  private getIcon(): string {
     return '/images/messages/icon-message.png';
   }
 }

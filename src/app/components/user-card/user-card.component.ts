@@ -8,7 +8,7 @@ import { GradientBorderDirective } from '../../directives/gradient-border.direct
 @Component({
   selector: 'app-user-card',
   standalone: true,
-  imports: [CommonModule, PhonePipe, HoverBoldDirective, GradientBorderDirective ],
+  imports: [CommonModule, PhonePipe, HoverBoldDirective, GradientBorderDirective],
   templateUrl: './user-card.component.html',
   styleUrl: './user-card.component.scss',
 })

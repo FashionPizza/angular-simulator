@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
@@ -15,19 +15,26 @@ import { fab } from '@fortawesome/free-brands-svg-icons';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, HeaderComponent, FooterComponent, MessageComponent,
-    LoaderComponent, FontAwesomeModule],
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    HeaderComponent,
+    FooterComponent,
+    MessageComponent,
+    LoaderComponent,
+    FontAwesomeModule,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent  {
+export class AppComponent {
+  localStorageService = inject(LocalStorageService);
+  private iconLibrary = inject(FaIconLibrary);
+  private themeService = inject(ThemeService);
+
   public isLoading = signal(true);
 
-  public constructor(
-    public localStorageService: LocalStorageService,
-    private iconLibrary: FaIconLibrary,
-    private themeService: ThemeService,
-  ) {
+  public constructor() {
     this.iconLibrary.addIconPacks(fas, far, fab);
     this.saveLastVisitDate();
     this.saveVisitCount();
