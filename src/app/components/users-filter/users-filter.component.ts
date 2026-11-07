@@ -19,11 +19,13 @@ export class UsersFilterComponent {
   private destroyRef = inject(DestroyRef);
 
   public constructor() {
-    this.nameControl.valueChanges.pipe(
-      debounceTime(200),
-      map(value => (value ?? '').trim().toLowerCase()),
-      distinctUntilChanged(),
-      takeUntilDestroyed(this.destroyRef),
-    ).subscribe(value => this.filterChange.emit(value));
+    this.nameControl.valueChanges
+      .pipe(
+        debounceTime(200),
+        map((value) => (value ?? '').trim().toLowerCase()),
+        distinctUntilChanged(),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe((value) => this.filterChange.emit(value));
   }
 }

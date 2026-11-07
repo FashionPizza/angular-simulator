@@ -7,12 +7,12 @@ import { Directive, HostBinding, HostListener, Input } from '@angular/core';
 export class HoverBoldDirective {
   // необязательная настройка: <button appHoverBold> → 'bold' по умолчанию,
   // <button [appHoverBold]="'800'"> → своя жирность при hover
-  @Input('appHoverBold') hoverWeight: string = 'bold';
+  @Input('appHoverBold') hoverWeight = 'bold';
 
   // HostBinding вешает inline-стиль на ХОСТ-элемент (кнопку),
   // без обращения к nativeElement.style
   @HostBinding('style.font-weight')
-  public fontWeight: string = '';
+  public fontWeight = '';
 
   @HostListener('mouseenter')
   public onMouseEnter(): void {

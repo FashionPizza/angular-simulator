@@ -7,7 +7,7 @@ import { IPost } from './post.interface';
 import { PostApiService } from './post-api.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PostService {
   private postsSubject = new BehaviorSubject<IPost[]>([]);
@@ -44,7 +44,7 @@ export class PostService {
       catchError(() => {
         this.messageService.showError('Не удалось загрузить посты');
         return of<IPost[]>([]);
-      })
+      }),
     );
   }
 
@@ -70,9 +70,7 @@ export class PostService {
     return this.postApiService.createPost(payload).pipe(
       tap((created) => {
         const exists = this.postsSubject.value.some((p) => p.id === created.id);
-        const id = exists
-          ? Math.max(...this.postsSubject.value.map((p) => p.id)) + 1
-          : created.id;
+        const id = exists ? Math.max(...this.postsSubject.value.map((p) => p.id)) + 1 : created.id;
 
         const createdPost: IPost = {
           id,
@@ -91,29 +89,31 @@ export class PostService {
         this.messageService.showError('Не удалось создать пост');
         return of(null);
       }),
-      finalize(() => this.loaderService.hideLoader())
+      finalize(() => this.loaderService.hideLoader()),
     );
   }
 
   public updatePost(post: IPost): Observable<IPost | null> {
     this.loaderService.showLoader();
-    return this.postApiService.updatePost(post.id, {
-      title: post.title,
-      body: post.body,
-      tags: post.tags,
-      views: post.views,
-    }).pipe(
-      tap(() => this.applyLocalUpdate(post)),
-      catchError((error) => {
-        if (error?.status === 404 && this.getPostByIdLocal(post.id)) {
-          this.applyLocalUpdate(post);
-          return of(post);
-        }
-        this.messageService.showError('Не удалось обновить пост');
-        return of(null);
-      }),
-      finalize(() => this.loaderService.hideLoader())
-    );
+    return this.postApiService
+      .updatePost(post.id, {
+        title: post.title,
+        body: post.body,
+        tags: post.tags,
+        views: post.views,
+      })
+      .pipe(
+        tap(() => this.applyLocalUpdate(post)),
+        catchError((error) => {
+          if (error?.status === 404 && this.getPostByIdLocal(post.id)) {
+            this.applyLocalUpdate(post);
+            return of(post);
+          }
+          this.messageService.showError('Не удалось обновить пост');
+          return of(null);
+        }),
+        finalize(() => this.loaderService.hideLoader()),
+      );
   }
 
   public deletePost(id: number): Observable<IPost | null> {
@@ -132,7 +132,7 @@ export class PostService {
         this.messageService.showError('Не удалось удалить пост');
         return of(null);
       }),
-      finalize(() => this.loaderService.hideLoader())
+      finalize(() => this.loaderService.hideLoader()),
     );
   }
 
@@ -142,7 +142,7 @@ export class PostService {
 
   private applyLocalUpdate(post: IPost): void {
     this.postsSubject.next(
-      this.postsSubject.value.map((p) => p.id === post.id ? { ...p, ...post } : p)
+      this.postsSubject.value.map((p) => (p.id === post.id ? { ...p, ...post } : p)),
     );
     this.messageService.showSuccess('Пост обновлён');
   }

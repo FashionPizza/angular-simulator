@@ -6,7 +6,6 @@ export type PhoneFormat = 'compact' | 'international' | 'national' | 'masked';
   name: 'phone',
   standalone: true,
 })
-
 export class PhonePipe implements PipeTransform {
   private readonly groups = [3, 3, 2, 2];
 
@@ -82,7 +81,7 @@ export class PhonePipe implements PipeTransform {
     const parts = this.groupDigits(local).split(' ');
 
     const masked = parts.map((part, index) =>
-      index === 0 || index === parts.length - 1 ? part : '*'.repeat(part.length)
+      index === 0 || index === parts.length - 1 ? part : '*'.repeat(part.length),
     );
 
     const body = masked.join(' ');

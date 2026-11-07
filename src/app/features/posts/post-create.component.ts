@@ -33,7 +33,10 @@ export class PostCreateComponent {
       return;
     }
     const { title, body, tags, views } = this.form.getRawValue();
-    const tagList = tags.split(',').map((t) => t.trim()).filter(Boolean);
+    const tagList = tags
+      .split(',')
+      .map((t) => t.trim())
+      .filter(Boolean);
     this.submitting = true;
     this.postService.addPost({ title, body, tags: tagList, views }).subscribe((created) => {
       this.submitting = false;

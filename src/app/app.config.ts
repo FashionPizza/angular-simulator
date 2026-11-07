@@ -13,9 +13,7 @@ import Aura from '@primeuix/themes/aura';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes, withInMemoryScrolling({ scrollPositionRestoration: 'top' })),
-    provideHttpClient(
-      withInterceptors([loggingInterceptor, errorInterceptor, authInterceptor]),
-    ),
+    provideHttpClient(withInterceptors([loggingInterceptor, errorInterceptor, authInterceptor])),
     provideAppInitializer(() => inject(AuthService).init()),
     providePrimeNG({
       theme: {

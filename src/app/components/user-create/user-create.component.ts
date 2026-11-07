@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { User } from '../../../enums/User';
@@ -8,11 +8,13 @@ import { GradientBorderDirective } from '../../directives/gradient-border.direct
 @Component({
   selector: 'app-user-create',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, HoverBoldDirective, GradientBorderDirective ],
+  imports: [CommonModule, ReactiveFormsModule, HoverBoldDirective, GradientBorderDirective],
   templateUrl: './user-create.component.html',
   styleUrl: './user-create.component.scss',
 })
 export class UserCreateComponent {
+  private fb = inject(FormBuilder);
+
   @Output() public create = new EventEmitter<User>();
 
   public form: FormGroup;
@@ -40,7 +42,7 @@ export class UserCreateComponent {
     },
   };
 
-  public constructor(private fb: FormBuilder) {
+  public constructor() {
     this.form = this.fb.group({
       name: ['', [Validators.pattern(/^[A-Za-zА-Яа-яЁё\s'-]*$/)]],
       username: ['', [Validators.pattern(/^[A-Za-z0-9_.-]*$/)]],

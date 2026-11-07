@@ -11,6 +11,12 @@ import { IPost } from './post.interface';
 import { PostService } from './post.service';
 import { PostEditDialogComponent } from './post-edit-dialog.component';
 
+interface IPageChangeEvent {
+  first?: number;
+  page?: number;
+  rows?: number;
+}
+
 @Component({
   selector: 'app-posts',
   standalone: true,
@@ -58,10 +64,10 @@ export class PostsComponent implements OnInit {
     this.postService.loadPosts(this.pageSize, this.first).subscribe(() => this.loading.set(false));
   }
 
-  public onPageChange(event: any): void {
-    this.first = event.first;
-    this.page = event.page;
-    this.pageSize = event.rows;
+  public onPageChange(event: IPageChangeEvent): void {
+    this.first = event.first ?? 0;
+    this.page = event.page ?? 0;
+    this.pageSize = event.rows ?? 10;
     this.loadPage();
   }
 
@@ -88,15 +94,17 @@ export class PostsComponent implements OnInit {
       return;
     }
 
-    this.dialogService.open(PostEditDialogComponent, {
-      header: 'Редактировать пост',
-      width: '560px',
-      data: post,
-    })?.onClose.subscribe((result: IPost | undefined) => {
-      if (result) {
-        this.postService.updatePost(result).subscribe();
-      }
-    });
+    this.dialogService
+      .open(PostEditDialogComponent, {
+        header: 'Редактировать пост',
+        width: '560px',
+        data: post,
+      })
+      ?.onClose.subscribe((result: IPost | undefined) => {
+        if (result) {
+          this.postService.updatePost(result).subscribe();
+        }
+      });
   }
 
   private deleteSelected(): void {

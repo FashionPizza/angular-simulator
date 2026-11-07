@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -12,26 +12,25 @@ import { PluralPipe } from '../../pipes/plural.pipe';
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [CommonModule, UserCardComponent, UserCreateComponent,
-    UsersFilterComponent,PluralPipe ],
+  imports: [CommonModule, UserCardComponent, UserCreateComponent, UsersFilterComponent, PluralPipe],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss',
 })
 export class UsersComponent implements OnInit {
+  private userService = inject(UserService);
+
   public users$: Observable<User[]>;
   public filteredUsers$: Observable<User[]>;
 
   private filterSubject = new BehaviorSubject<string>('');
 
-  public constructor(private userService: UserService) {
+  public constructor() {
     this.users$ = this.userService.getUsers();
 
     this.filteredUsers$ = combineLatest([this.users$, this.filterSubject]).pipe(
       map(([users, filter]) =>
-        filter
-          ? users.filter(user => user.name.toLowerCase().includes(filter))
-          : users
-      )
+        filter ? users.filter((user) => user.name.toLowerCase().includes(filter)) : users,
+      ),
     );
   }
 

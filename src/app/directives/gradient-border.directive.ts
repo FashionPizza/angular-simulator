@@ -1,5 +1,11 @@
 import {
-  Directive, ElementRef, HostListener, Input, OnDestroy, Renderer2,
+  Directive,
+  ElementRef,
+  HostListener,
+  Input,
+  OnDestroy,
+  Renderer2,
+  inject,
 } from '@angular/core';
 
 export interface GradientBorderConfiguration {
@@ -30,14 +36,12 @@ const GRADIENT_STYLES = [
   standalone: true,
 })
 export class GradientBorderDirective implements OnDestroy {
+  private el = inject<ElementRef<HTMLElement>>(ElementRef);
+  private renderer = inject(Renderer2);
+
   @Input() public gradientConfiguration: GradientBorderConfiguration = {};
 
   private timeoutId: ReturnType<typeof setTimeout> | null = null;
-
-  public constructor(
-    private el: ElementRef<HTMLElement>,
-    private renderer: Renderer2,
-  ) {}
 
   @HostListener('mouseenter')
   public onMouseEnter(): void {
@@ -77,8 +81,11 @@ export class GradientBorderDirective implements OnDestroy {
     const loop = [...colors, colors[0]].join(', ');
 
     r.setStyle(el, 'border', `${thickness} solid transparent`);
-    r.setStyle(el, 'background-image',
-      `linear-gradient(${inner}, ${inner}), linear-gradient(90deg, ${loop})`);
+    r.setStyle(
+      el,
+      'background-image',
+      `linear-gradient(${inner}, ${inner}), linear-gradient(90deg, ${loop})`,
+    );
     r.setStyle(el, 'background-clip', 'padding-box, border-box');
     r.setStyle(el, 'background-origin', 'padding-box, border-box');
     r.setStyle(el, 'background-size', '100% 100%, 300% 100%');

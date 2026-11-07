@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -15,6 +15,8 @@ import { MessageService } from '../../message.service';
   styleUrl: './home.component.scss',
 })
 export class HomeComponent {
+  messageService = inject(MessageService);
+
   public location = '';
   public date = '';
   public participants = '';
@@ -24,12 +26,22 @@ export class HomeComponent {
   public moments = moments;
 
   public programs = [
-    { icon: 'person-hiking', title: 'Опытный гид', text: 'Для современного мира базовый вектор развития...' },
-    { icon: 'shield-halved', title: 'Безопасный поход', text: 'Для современного мира базовый вектор развития...' },
-    { icon: 'tags', title: 'Лояльные цены', text: 'Для современного мира базовый вектор развития...' },
+    {
+      icon: 'person-hiking',
+      title: 'Опытный гид',
+      text: 'Для современного мира базовый вектор развития...',
+    },
+    {
+      icon: 'shield-halved',
+      title: 'Безопасный поход',
+      text: 'Для современного мира базовый вектор развития...',
+    },
+    {
+      icon: 'tags',
+      title: 'Лояльные цены',
+      text: 'Для современного мира базовый вектор развития...',
+    },
   ];
-
-  public constructor(public messageService: MessageService) {}
 
   public get isFormValid(): boolean {
     return this.location !== '' && this.date !== '' && this.participants !== '';

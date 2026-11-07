@@ -6,15 +6,13 @@ import { IPost, IPostResponse } from './post.interface';
 const POSTS_URL = 'https://dummyjson.com/posts';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PostApiService {
   private http = inject(HttpClient);
 
   public getPosts(limit: number, skip: number): Observable<IPostResponse> {
-    const params = new HttpParams()
-      .set('limit', limit)
-      .set('skip', skip);
+    const params = new HttpParams().set('limit', limit).set('skip', skip);
 
     return this.http.get<IPostResponse>(POSTS_URL, { params });
   }

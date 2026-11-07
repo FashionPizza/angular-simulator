@@ -1,7 +1,7 @@
 import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, catchError, finalize, map, shareReplay, switchMap, throwError,} from 'rxjs';
+import { Observable, catchError, finalize, map, shareReplay, switchMap, throwError } from 'rxjs';
 import { AuthService } from './auth.service';
 
 let refreshRequest$: Observable<string> | null = null;
@@ -18,8 +18,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
   return next(authReq).pipe(
     catchError((error: HttpErrorResponse) => {
-      const isAuthRequest =
-        req.url.includes('/auth/login') || req.url.includes('/auth/refresh');
+      const isAuthRequest = req.url.includes('/auth/login') || req.url.includes('/auth/refresh');
 
       if (error.status !== 401 || isAuthRequest) {
         return throwError(() => error);

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -13,12 +13,13 @@ import { MessageService } from '../../message.service';
   styleUrl: './footer.component.scss',
 })
 export class FooterComponent {
+  private messageService = inject(MessageService);
+
   public socials = socials;
   public services = services;
   public travelInfo = travelInfo;
   public isSubscribed = false;
   public email = '';
-  public constructor(private messageService: MessageService) {}
 
   public onSubscribe(): void {
     if (this.email && this.email.includes('@')) {
