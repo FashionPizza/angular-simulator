@@ -1,15 +1,13 @@
 @if (isLoading() ) {
-  <div class="loader">
-    <fa-icon class="loader__icon" icon="spinner" animation="spin" />
-  </div>
-}
-
-@if (!isLoading() ) {
-  <app-header />
-    <main>
-      <router-outlet />
-    </main>
-  <app-footer />
+<div class="loader">
+  <fa-icon class="loader__icon" icon="spinner" animation="spin" />
+</div>
+} @if (!isLoading() ) {
+<app-header />
+<main>
+  <router-outlet />
+</main>
+<app-footer />
 }
 
 <app-message />

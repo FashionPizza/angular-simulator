@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MessageService } from '../../message.service';
@@ -12,20 +12,22 @@ import { MessageType } from '../../../enums/MessageType';
   styleUrl: './message.component.scss',
 })
 export class MessageComponent {
-  public constructor(public messageService: MessageService) {}
 
-  public getIconByType(type: MessageType): string {
+  messageService = inject(MessageService);
+
+  getIconByType(type: MessageType): string {
     switch (type) {
-      case MessageType.Success:
-        return 'circle-check';
-      case MessageType.Info:
-        return 'circle-info';
-      case MessageType.Warn:
-        return 'triangle-exclamation';
-      case MessageType.Error:
-        return 'circle-xmark';
-      default:
-        return 'circle-info';
+    case MessageType.SUCCESS:
+      return 'circle-check';
+    case MessageType.INFO:
+      return 'circle-info';
+    case MessageType.WARN:
+      return 'triangle-exclamation';
+    case MessageType.ERROR:
+      return 'circle-xmark';
+    default:
+      return 'circle-info';
     }
   }
+
 }

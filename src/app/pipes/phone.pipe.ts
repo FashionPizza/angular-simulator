@@ -6,11 +6,11 @@ export type PhoneFormat = 'compact' | 'international' | 'national' | 'masked';
   name: 'phone',
   standalone: true,
 })
-
 export class PhonePipe implements PipeTransform {
+
   private readonly groups = [3, 3, 2, 2];
 
-  public transform(value: string | number, mode: PhoneFormat = 'international'): string {
+  transform(value: string | number, mode: PhoneFormat = 'international'): string {
     const digits = this.extractDigits(value);
 
     if (!digits) {
@@ -19,15 +19,15 @@ export class PhonePipe implements PipeTransform {
     const { countryCode, local } = this.splitNumber(digits);
 
     switch (mode) {
-      case 'compact':
-        return this.toCompact(countryCode, local);
-      case 'national':
-        return this.groupDigits(local);
-      case 'masked':
-        return this.toMasked(countryCode, local);
-      case 'international':
-      default:
-        return this.toInternational(countryCode, local);
+    case 'compact':
+      return this.toCompact(countryCode, local);
+    case 'national':
+      return this.groupDigits(local);
+    case 'masked':
+      return this.toMasked(countryCode, local);
+    case 'international':
+    default:
+      return this.toInternational(countryCode, local);
     }
   }
 
@@ -71,21 +71,22 @@ export class PhonePipe implements PipeTransform {
 
   private toInternational(countryCode: string, local: string): string {
     const body = this.groupDigits(local);
-    return countryCode ? `+${countryCode} ${body}` : body;
+    return countryCode ? `+${ countryCode } ${ body }` : body;
   }
 
   private toCompact(countryCode: string, local: string): string {
-    return countryCode ? `+${countryCode}${local}` : local;
+    return countryCode ? `+${ countryCode }${ local }` : local;
   }
 
   private toMasked(countryCode: string, local: string): string {
     const parts = this.groupDigits(local).split(' ');
 
     const masked = parts.map((part, index) =>
-      index === 0 || index === parts.length - 1 ? part : '*'.repeat(part.length)
+      index === 0 || index === parts.length - 1 ? part : '*'.repeat(part.length),
     );
 
     const body = masked.join(' ');
-    return countryCode ? `+${countryCode} ${body}` : body;
+    return countryCode ? `+${ countryCode } ${ body }` : body;
   }
+
 }

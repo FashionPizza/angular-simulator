@@ -12,12 +12,14 @@ import { IPost } from './post.interface';
   styleUrl: './post-detail.component.scss',
 })
 export class PostDetailComponent {
+
   private router = inject(Router);
   private route = inject(ActivatedRoute);
 
-  public post = signal<IPost | null>(this.route.snapshot.data['post'] ?? null);
+  post = signal<IPost | null>(this.route.snapshot.data['post'] ?? null);
 
-  public goBack(): void {
+  goBack(): void {
     this.router.navigate(['/posts']);
   }
+
 }

@@ -5,21 +5,17 @@
 
   <app-users-filter (filterChange)="onFilterChange($event)" />
 
-  @if ((filteredUsers$ | async); as users) {
-    @if (users.length > 0) {
-      <div class="users__count">
-        {{ users.length | plural:'пользователей':'пользователя':'пользователь' }}
-      </div>
-      
-      <div class="users__list">
-        @for (user of users; track user.id) {
-          <app-user-card [user]="user" (delete)="onDeleteUser($event)" />
-        }
-      </div>
-    } @else {
-      <div class="users__empty">
-        Нет пользователей для отображения
-      </div>
+  @if ((filteredUsers$ | async); as users) { @if (users.length > 0) {
+  <div class="users__count">
+    {{ users.length | plural:'пользователей':'пользователя':'пользователь' }}
+  </div>
+
+  <div class="users__list">
+    @for (user of users; track user.id) {
+    <app-user-card [user]="user" (delete)="onDeleteUser($event)" />
     }
-  }
+  </div>
+  } @else {
+  <div class="users__empty">Нет пользователей для отображения</div>
+  } }
 </section>

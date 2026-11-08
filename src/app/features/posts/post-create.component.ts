@@ -14,26 +14,30 @@ import { PostService } from './post.service';
   styleUrl: './post-create.component.scss',
 })
 export class PostCreateComponent {
+
   private fb = inject(FormBuilder);
   private postService = inject(PostService);
   private router = inject(Router);
 
-  public submitting = false;
+  submitting = false;
 
-  public form = this.fb.nonNullable.group({
+  form = this.fb.nonNullable.group({
     title: ['', [Validators.required, Validators.minLength(5)]],
     body: ['', [Validators.required, Validators.minLength(10)]],
     tags: [''],
     views: [0, [Validators.required, Validators.min(0)]],
   });
 
-  public onSubmit(): void {
+  onSubmit(): void {
     if (this.form.invalid || this.submitting) {
       this.form.markAllAsTouched();
       return;
     }
     const { title, body, tags, views } = this.form.getRawValue();
-    const tagList = tags.split(',').map((t) => t.trim()).filter(Boolean);
+    const tagList = tags
+      .split(',')
+      .map((t) => t.trim())
+      .filter(Boolean);
     this.submitting = true;
     this.postService.addPost({ title, body, tags: tagList, views }).subscribe((created) => {
       this.submitting = false;
@@ -43,7 +47,8 @@ export class PostCreateComponent {
     });
   }
 
-  public cancel(): void {
+  cancel(): void {
     this.router.navigate(['/posts']);
   }
+
 }

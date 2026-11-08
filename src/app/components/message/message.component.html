@@ -1,16 +1,16 @@
 @if (messageService.messages$ | async; as messages) {
-  <div class="messages">
-    @for (message of messages; track message.id) {
-      <div class="message-card">
-        <fa-icon class="message-card__icon" [icon]="getIconByType(message.type)" />
-        <div class="message-card__content">
-          <div class="message-card__type">{{ message.type }}</div>
-          <div class="message-card__text">{{ message.text }}</div>
-        </div>
-        <button class="message-card__delete" (click)="messageService.closeMessage(message.id)">
-          <fa-icon icon="xmark" />
-        </button>
-      </div>
-    }
+<div class="messages">
+  @for (message of messages; track message.id) {
+  <div class="message-card">
+    <fa-icon class="message-card__icon" [icon]="getIconByType(message.type)" />
+    <div class="message-card__content">
+      <div class="message-card__type">{{ message.type }}</div>
+      <div class="message-card__text">{{ message.text }}</div>
+    </div>
+    <button class="message-card__delete" (click)="messageService.closeMessage(message.id)">
+      <fa-icon icon="xmark" />
+    </button>
   </div>
+  }
+</div>
 }

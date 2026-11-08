@@ -9,17 +9,17 @@ export const loggingInterceptor: HttpInterceptorFn = (req, next) => {
       next: (event) => {
         if (event.type === HttpEventType.Response) {
           const duration = Math.round(performance.now() - startedAt);
-          console.log(
-            `[HTTP] ${req.method} ${req.urlWithParams} → ${event.status} ${event.statusText} (${duration}ms)`
+          console.warn(
+            `[HTTP] ${ req.method } ${ req.urlWithParams } → ${ event.status } ${ event.statusText } (${ duration }ms)`,
           );
         }
       },
       error: (error) => {
         const duration = Math.round(performance.now() - startedAt);
-        console.log(
-          `[HTTP] ${req.method} ${req.urlWithParams} → ошибка ${error.status ?? 'NETWORK'} (${duration}ms)`
+        console.warn(
+          `[HTTP] ${ req.method } ${ req.urlWithParams } → ошибка ${ error.status ?? 'NETWORK' } (${ duration }ms)`,
         );
       },
-    })
+    }),
   );
 };

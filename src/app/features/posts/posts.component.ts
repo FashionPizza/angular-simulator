@@ -11,6 +11,12 @@ import { IPost } from './post.interface';
 import { PostService } from './post.service';
 import { PostEditDialogComponent } from './post-edit-dialog.component';
 
+interface IPageChangeEvent {
+  first?: number;
+  page?: number;
+  rows?: number;
+}
+
 @Component({
   selector: 'app-posts',
   standalone: true,
@@ -20,27 +26,28 @@ import { PostEditDialogComponent } from './post-edit-dialog.component';
   providers: [DialogService],
 })
 export class PostsComponent implements OnInit {
+
   private postService = inject(PostService);
   private router = inject(Router);
   private dialogService = inject(DialogService);
 
-  public posts = signal<IPost[]>([]);
-  public loading = signal(true);
-  public selectedPost: IPost | null = null;
+  posts = signal<IPost[]>([]);
+  loading = signal(true);
+  selectedPost: IPost | null = null;
 
-  public first = 0;
-  public page = 0;
-  public pageSize = 10;
-  public totalRecords = 0;
-  public pageSizes = [10, 20, 50];
+  first = 0;
+  page = 0;
+  pageSize = 10;
+  totalRecords = 0;
+  pageSizes = [10, 20, 50];
 
-  public menuItems: MenuItem[] = [
+  menuItems: MenuItem[] = [
     { label: 'View', icon: 'pi pi-eye', command: () => this.openDetail(this.selectedPost) },
     { label: 'Edit', icon: 'pi pi-pencil', command: () => this.openEdit(this.selectedPost) },
     { label: 'Delete', icon: 'pi pi-trash', command: () => this.deleteSelected() },
   ];
 
-  public ngOnInit(): void {
+  ngOnInit(): void {
     this.postService.getPosts().subscribe((posts) => this.posts.set(posts));
     this.postService.getTotal().subscribe((total) => (this.totalRecords = total));
 
@@ -53,27 +60,27 @@ export class PostsComponent implements OnInit {
     this.loadPage();
   }
 
-  public loadPage(): void {
+  loadPage(): void {
     this.loading.set(true);
     this.postService.loadPosts(this.pageSize, this.first).subscribe(() => this.loading.set(false));
   }
 
-  public onPageChange(event: any): void {
-    this.first = event.first;
-    this.page = event.page;
-    this.pageSize = event.rows;
+  onPageChange(event: IPageChangeEvent): void {
+    this.first = event.first ?? 0;
+    this.page = event.page ?? 0;
+    this.pageSize = event.rows ?? 10;
     this.loadPage();
   }
 
-  public onRowDblclick(post: IPost): void {
+  onRowDblclick(post: IPost): void {
     this.openDetail(post);
   }
 
-  public onContextMenuSelect(post: IPost): void {
+  onContextMenuSelect(post: IPost): void {
     this.selectedPost = post;
   }
 
-  public goCreate(): void {
+  goCreate(): void {
     this.router.navigate(['/posts/create']);
   }
 
@@ -88,15 +95,17 @@ export class PostsComponent implements OnInit {
       return;
     }
 
-    this.dialogService.open(PostEditDialogComponent, {
-      header: 'Редактировать пост',
-      width: '560px',
-      data: post,
-    })?.onClose.subscribe((result: IPost | undefined) => {
-      if (result) {
-        this.postService.updatePost(result).subscribe();
-      }
-    });
+    this.dialogService
+      .open(PostEditDialogComponent, {
+        header: 'Редактировать пост',
+        width: '560px',
+        data: post,
+      })
+      ?.onClose.subscribe((result: IPost | undefined) => {
+        if (result) {
+          this.postService.updatePost(result).subscribe();
+        }
+      });
   }
 
   private deleteSelected(): void {
@@ -104,4 +113,5 @@ export class PostsComponent implements OnInit {
       this.postService.deletePost(this.selectedPost.id).subscribe();
     }
   }
+
 }

@@ -1,9 +1,9 @@
 <header class="header">
   @if (user(); as currentUser) {
-    <div class="header__session">
-      <span class="header__user">{{ currentUser.firstName }} {{ currentUser.lastName }}</span>
-      <p-button label="Выйти" severity="danger" text="true" (onClick)="onLogout()" />
-    </div>
+  <div class="header__session">
+    <span class="header__user">{{ currentUser.firstName }} {{ currentUser.lastName }}</span>
+    <p-button label="Выйти" severity="danger" text="true" (onClick)="onLogout()" />
+  </div>
   }
   <div class="header__container">
     <a class="header__logo" routerLink="/">
@@ -13,13 +13,13 @@
 
     <nav class="header__nav">
       @for (item of navItems; track item.path) {
-        <a
-          [routerLink]="item.path"
-          routerLinkActive="is-active"
-          [routerLinkActiveOptions]="{ exact: item.exact }"
-        >
-          {{ item.label }}
-        </a>
+      <a
+        [routerLink]="item.path"
+        routerLinkActive="is-active"
+        [routerLinkActiveOptions]="{ exact: item.exact }"
+      >
+        {{ item.label }}
+      </a>
       }
     </nav>
 
@@ -30,13 +30,13 @@
     <div class="header__switch">
       <div class="header__info">
         @if (showTimer) {
-          <span class="header__timer">{{ currentDate() }}</span>
+        <span class="header__timer">{{ currentDate() }}</span>
         } @else {
-          <div class="header__counter">
-            <button type="button" (click)="decrease()">-</button>
-            <span>{{ clickCount }}</span>
-            <button type="button" (click)="increase()">+</button>
-          </div>
+        <div class="header__counter">
+          <button type="button" (click)="decrease()">-</button>
+          <span>{{ clickCount }}</span>
+          <button type="button" (click)="increase()">+</button>
+        </div>
         }
       </div>
       <button class="header__switch-text" type="button" (click)="toggleHeaderInfo()">

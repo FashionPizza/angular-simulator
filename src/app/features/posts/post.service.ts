@@ -7,9 +7,10 @@ import { IPost } from './post.interface';
 import { PostApiService } from './post-api.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PostService {
+
   private postsSubject = new BehaviorSubject<IPost[]>([]);
   private totalSubject = new BehaviorSubject<number>(0);
 
@@ -20,15 +21,15 @@ export class PostService {
   private loaderService = inject(LoaderService);
   private messageService = inject(MessageService);
 
-  public getPosts(): Observable<IPost[]> {
+  getPosts(): Observable<IPost[]> {
     return this.postsSubject.asObservable();
   }
 
-  public getTotal(): Observable<number> {
+  getTotal(): Observable<number> {
     return this.totalSubject.asObservable();
   }
 
-  public loadPosts(limit: number, skip: number): Observable<IPost[]> {
+  loadPosts(limit: number, skip: number): Observable<IPost[]> {
     if (limit === this.loadedLimit && skip === this.loadedSkip) {
       return of(this.postsSubject.value);
     }
@@ -44,15 +45,15 @@ export class PostService {
       catchError(() => {
         this.messageService.showError('Не удалось загрузить посты');
         return of<IPost[]>([]);
-      })
+      }),
     );
   }
 
-  public getLastQuery(): { limit: number; skip: number } {
+  getLastQuery(): { limit: number; skip: number } {
     return { limit: this.loadedLimit, skip: this.loadedSkip };
   }
 
-  public addPost(data: {
+  addPost(data: {
     title: string;
     body: string;
     tags: string[];
@@ -70,9 +71,7 @@ export class PostService {
     return this.postApiService.createPost(payload).pipe(
       tap((created) => {
         const exists = this.postsSubject.value.some((p) => p.id === created.id);
-        const id = exists
-          ? Math.max(...this.postsSubject.value.map((p) => p.id)) + 1
-          : created.id;
+        const id = exists ? Math.max(...this.postsSubject.value.map((p) => p.id)) + 1 : created.id;
 
         const createdPost: IPost = {
           id,
@@ -91,32 +90,34 @@ export class PostService {
         this.messageService.showError('Не удалось создать пост');
         return of(null);
       }),
-      finalize(() => this.loaderService.hideLoader())
+      finalize(() => this.loaderService.hideLoader()),
     );
   }
 
-  public updatePost(post: IPost): Observable<IPost | null> {
+  updatePost(post: IPost): Observable<IPost | null> {
     this.loaderService.showLoader();
-    return this.postApiService.updatePost(post.id, {
-      title: post.title,
-      body: post.body,
-      tags: post.tags,
-      views: post.views,
-    }).pipe(
-      tap(() => this.applyLocalUpdate(post)),
-      catchError((error) => {
-        if (error?.status === 404 && this.getPostByIdLocal(post.id)) {
-          this.applyLocalUpdate(post);
-          return of(post);
-        }
-        this.messageService.showError('Не удалось обновить пост');
-        return of(null);
-      }),
-      finalize(() => this.loaderService.hideLoader())
-    );
+    return this.postApiService
+      .updatePost(post.id, {
+        title: post.title,
+        body: post.body,
+        tags: post.tags,
+        views: post.views,
+      })
+      .pipe(
+        tap(() => this.applyLocalUpdate(post)),
+        catchError((error) => {
+          if (error?.status === 404 && this.getPostByIdLocal(post.id)) {
+            this.applyLocalUpdate(post);
+            return of(post);
+          }
+          this.messageService.showError('Не удалось обновить пост');
+          return of(null);
+        }),
+        finalize(() => this.loaderService.hideLoader()),
+      );
   }
 
-  public deletePost(id: number): Observable<IPost | null> {
+  deletePost(id: number): Observable<IPost | null> {
     this.loaderService.showLoader();
     return this.postApiService.deletePost(id).pipe(
       tap(() => {
@@ -132,18 +133,19 @@ export class PostService {
         this.messageService.showError('Не удалось удалить пост');
         return of(null);
       }),
-      finalize(() => this.loaderService.hideLoader())
+      finalize(() => this.loaderService.hideLoader()),
     );
   }
 
-  public getPostByIdLocal(id: number): IPost | undefined {
+  getPostByIdLocal(id: number): IPost | undefined {
     return this.postsSubject.value.find((p) => p.id === id);
   }
 
   private applyLocalUpdate(post: IPost): void {
     this.postsSubject.next(
-      this.postsSubject.value.map((p) => p.id === post.id ? { ...p, ...post } : p)
+      this.postsSubject.value.map((p) => (p.id === post.id ? { ...p, ...post } : p)),
     );
     this.messageService.showSuccess('Пост обновлён');
   }
+
 }

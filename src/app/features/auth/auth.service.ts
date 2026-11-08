@@ -13,37 +13,38 @@ interface IRefreshResponse {
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+
   private readonly http = inject(HttpClient);
   private readonly baseUrl = 'https://dummyjson.com/auth';
 
-  public readonly user = signal<IAuthUser | null>(null);
-  public readonly isAuthenticated = computed(() => this.user() !== null);
+  readonly user = signal<IAuthUser | null>(null);
+  readonly isAuthenticated = computed(() => this.user() !== null);
 
-  public get accessToken(): string | null {
+  get accessToken(): string | null {
     return localStorage.getItem(ACCESS_TOKEN_KEY);
   }
 
-  public get refreshTokenValue(): string | null {
+  get refreshTokenValue(): string | null {
     return localStorage.getItem(REFRESH_TOKEN_KEY);
   }
 
-  public login(data: { username: string; password: string }): Observable<IAuthUser> {
+  login(data: { username: string; password: string }): Observable<IAuthUser> {
     return this.http
-      .post<IAuth>(`${this.baseUrl}/login`, {
+      .post<IAuth>(`${ this.baseUrl }/login`, {
         username: data.username,
         password: data.password,
         expiresInMins: 60,
       })
       .pipe(
         tap((response) => this.setSession(response)),
-        switchMap(() => this.http.get<IAuthUser>(`${this.baseUrl}/me`)),
+        switchMap(() => this.http.get<IAuthUser>(`${ this.baseUrl }/me`)),
         tap((user) => this.user.set(user)),
       );
   }
 
-  public refresh(refreshToken: string): Observable<IRefreshResponse> {
+  refresh(refreshToken: string): Observable<IRefreshResponse> {
     return this.http
-      .post<IRefreshResponse>(`${this.baseUrl}/refresh`, {
+      .post<IRefreshResponse>(`${ this.baseUrl }/refresh`, {
         refreshToken,
         expiresInMins: 60,
       })
@@ -55,7 +56,7 @@ export class AuthService {
       );
   }
 
-  public init(): Observable<IAuthUser | null> {
+  init(): Observable<IAuthUser | null> {
     const token = this.accessToken;
 
     if (!token) {
@@ -63,7 +64,7 @@ export class AuthService {
       return of(null);
     }
 
-    return this.http.get<IAuthUser>(`${this.baseUrl}/me`).pipe(
+    return this.http.get<IAuthUser>(`${ this.baseUrl }/me`).pipe(
       tap((user) => this.user.set(this.mapUser(user))),
       catchError(() => {
         this.logout();
@@ -72,7 +73,7 @@ export class AuthService {
     );
   }
 
-  public logout(): void {
+  logout(): void {
     localStorage.removeItem(ACCESS_TOKEN_KEY);
     localStorage.removeItem(REFRESH_TOKEN_KEY);
     this.user.set(null);
@@ -93,6 +94,7 @@ export class AuthService {
 
   private setSession(auth: IAuth): void {
     localStorage.setItem(ACCESS_TOKEN_KEY, auth.accessToken);
-    localStorage.setItem(REFRESH_TOKEN_KEY, auth.refreshToken);    
+    localStorage.setItem(REFRESH_TOKEN_KEY, auth.refreshToken);
   }
+
 }
