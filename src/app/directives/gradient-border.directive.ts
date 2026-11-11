@@ -1,8 +1,14 @@
 import {
-  Directive, ElementRef, HostListener, Input, OnDestroy, Renderer2,
+  Directive,
+  ElementRef,
+  HostListener,
+  Input,
+  OnDestroy,
+  Renderer2,
+  inject,
 } from '@angular/core';
 
-export interface GradientBorderConfiguration {
+export interface IGradientBorderConfiguration {
   delay?: number;
   colors?: string[];
   thickness?: string;
@@ -30,17 +36,16 @@ const GRADIENT_STYLES = [
   standalone: true,
 })
 export class GradientBorderDirective implements OnDestroy {
-  @Input() public gradientConfiguration: GradientBorderConfiguration = {};
+
+  private el = inject<ElementRef<HTMLElement>>(ElementRef);
+  private renderer = inject(Renderer2);
+
+  @Input() gradientConfiguration: IGradientBorderConfiguration = {};
 
   private timeoutId: ReturnType<typeof setTimeout> | null = null;
 
-  public constructor(
-    private el: ElementRef<HTMLElement>,
-    private renderer: Renderer2,
-  ) {}
-
   @HostListener('mouseenter')
-  public onMouseEnter(): void {
+  onMouseEnter(): void {
     if (this.timeoutId !== null) {
       return;
     }
@@ -52,12 +57,12 @@ export class GradientBorderDirective implements OnDestroy {
   }
 
   @HostListener('mouseleave')
-  public onMouseLeave(): void {
+  onMouseLeave(): void {
     this.clearTimer();
     this.removeGradient();
   }
 
-  public ngOnDestroy(): void {
+  ngOnDestroy(): void {
     this.clearTimer();
   }
 
@@ -76,9 +81,12 @@ export class GradientBorderDirective implements OnDestroy {
     const inner = this.resolveInnerColor();
     const loop = [...colors, colors[0]].join(', ');
 
-    r.setStyle(el, 'border', `${thickness} solid transparent`);
-    r.setStyle(el, 'background-image',
-      `linear-gradient(${inner}, ${inner}), linear-gradient(90deg, ${loop})`);
+    r.setStyle(el, 'border', `${ thickness } solid transparent`);
+    r.setStyle(
+      el,
+      'background-image',
+      `linear-gradient(${ inner }, ${ inner }), linear-gradient(90deg, ${ loop })`,
+    );
     r.setStyle(el, 'background-clip', 'padding-box, border-box');
     r.setStyle(el, 'background-origin', 'padding-box, border-box');
     r.setStyle(el, 'background-size', '100% 100%, 300% 100%');
@@ -104,4 +112,5 @@ export class GradientBorderDirective implements OnDestroy {
     }
     return '#FFFFFF';
   }
+
 }

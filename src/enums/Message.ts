@@ -1,6 +1,6 @@
 import { MessageType } from './MessageType';
 
-export interface Message {
+export interface IMessage {
   id: number;
   type: MessageType;
   text: string;

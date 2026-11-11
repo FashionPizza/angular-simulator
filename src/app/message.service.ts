@@ -1,40 +1,40 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Message } from '../enums/Message';
+import { IMessage } from '../enums/Message';
 import { MessageType } from '../enums/MessageType';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MessageService {
 
-  private messagesSubject = new BehaviorSubject<Message[]>([]);
-  public messages$: Observable<Message[]> = this.messagesSubject.asObservable();
+  private messagesSubject = new BehaviorSubject<IMessage[]>([]);
+  messages$: Observable<IMessage[]> = this.messagesSubject.asObservable();
 
   private nextId = 1;
 
-  public showSuccess(text: string = 'Успешное сообщение'): void {
-    this.addMessage(MessageType.Success, text);
+  showSuccess(text = 'Успешное сообщение'): void {
+    this.addMessage(MessageType.SUCCESS, text);
   }
 
-  public showInfo(text: string = 'Информационное сообщение'): void {
-    this.addMessage(MessageType.Info, text);
+  showInfo(text = 'Информационное сообщение'): void {
+    this.addMessage(MessageType.INFO, text);
   }
 
-  public showWarn(text: string = 'Предупреждение'): void {
-    this.addMessage(MessageType.Warn, text);
+  showWarn(text = 'Предупреждение'): void {
+    this.addMessage(MessageType.WARN, text);
   }
 
-  public showError(text: string = 'Ошибка'): void {
-    this.addMessage(MessageType.Error, text);
+  showError(text = 'Ошибка'): void {
+    this.addMessage(MessageType.ERROR, text);
   }
 
   private addMessage(type: MessageType, text: string): void {
-    const message: Message = {
+    const message: IMessage = {
       id: this.nextId++,
       type,
       text,
-      icon: this.getIcon(type)
+      icon: this.getIcon(),
     };
 
     const current = this.messagesSubject.value;
@@ -45,12 +45,13 @@ export class MessageService {
     }, 5000);
   }
 
-  public closeMessage(id: number): void {
+  closeMessage(id: number): void {
     const current = this.messagesSubject.value;
-    this.messagesSubject.next(current.filter(message => message.id !== id));
+    this.messagesSubject.next(current.filter((message) => message.id !== id));
   }
 
-  private getIcon(type: MessageType): string {
+  private getIcon(): string {
     return '/images/messages/icon-message.png';
   }
+
 }

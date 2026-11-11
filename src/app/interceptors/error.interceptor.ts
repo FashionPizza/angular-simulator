@@ -11,10 +11,10 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
       const status = error?.status;
 
       if (status >= 500 && status < 600) {
-        messageService.showError(`Ошибка сервера (${status}). Попробуйте позже.`);
+        messageService.showError(`Ошибка сервера (${ status }). Попробуйте позже.`);
       }
 
       return throwError(() => error);
-    })
+    }),
   );
 };

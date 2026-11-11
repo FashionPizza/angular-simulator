@@ -1,4 +1,4 @@
 export enum Theme {
-  Default = 'default',
-  Ocean = 'ocean',
+  DEFAULT = 'default',
+  OCEAN = 'ocean',
 }

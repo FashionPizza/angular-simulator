@@ -23,8 +23,8 @@ const Custom = definePreset(Aura, {
 });
 
 export const THEME_PRESETS = {
-  [ThemePreset.Aura]: Aura,
-  [ThemePreset.Lara]: Lara,
-  [ThemePreset.Nora]: Nora,
-  [ThemePreset.Custom]: Custom,
+  [ThemePreset.AURA]: Aura,
+  [ThemePreset.LARA]: Lara,
+  [ThemePreset.NORA]: Nora,
+  [ThemePreset.CUSTOM]: Custom,
 };

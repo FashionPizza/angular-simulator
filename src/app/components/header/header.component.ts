@@ -11,7 +11,7 @@ import { ColorMode } from '../../../enums/ColorMode';
 import { ThemePreset } from '../../../enums/ThemePreset';
 import { AuthService } from '../../features/auth/auth.service';
 
-interface NavItem {
+interface INavItem {
   label: string;
   path: string;
   exact: boolean;
@@ -20,28 +20,39 @@ interface NavItem {
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, RouterLinkActive, FontAwesomeModule,
-    ButtonModule, ToggleSwitchModule, SelectButtonModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterLink,
+    RouterLinkActive,
+    FontAwesomeModule,
+    ButtonModule,
+    ToggleSwitchModule,
+    SelectButtonModule,
+  ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent implements OnDestroy {
-  public companyName = 'РУМТИБЕТ';
-  public clickCount = 0;
-  public currentDate = signal('');
-  public showTimer = true;
-  public liveText = '';
 
-  public colorMode = ColorMode;
+  themeService = inject(ThemeService);
 
-  public presetOptions = [
-    { label: 'Aura', value: ThemePreset.Aura },
-    { label: 'Lara', value: ThemePreset.Lara },
-    { label: 'Nora', value: ThemePreset.Nora },
-    { label: 'Custom', value: ThemePreset.Custom },
+  companyName = 'РУМТИБЕТ';
+  clickCount = 0;
+  currentDate = signal('');
+  showTimer = true;
+  liveText = '';
+
+  colorMode = ColorMode;
+
+  presetOptions = [
+    { label: 'Aura', value: ThemePreset.AURA },
+    { label: 'Lara', value: ThemePreset.LARA },
+    { label: 'Nora', value: ThemePreset.NORA },
+    { label: 'Custom', value: ThemePreset.CUSTOM },
   ];
 
-  public navItems: NavItem[] = [
+  navItems: INavItem[] = [
     { label: 'Главная', path: '/', exact: true },
     { label: 'Пользователи', path: '/users', exact: false },
     { label: 'Посты', path: '/posts', exact: false },
@@ -50,29 +61,40 @@ export class HeaderComponent implements OnDestroy {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
 
-  public readonly user = this.authService.user;
+  readonly user = this.authService.user;
 
   private timerId: ReturnType<typeof setInterval>;
 
-  public constructor(public themeService: ThemeService) {
+  constructor() {
     this.updateDate();
     this.timerId = setInterval(() => this.updateDate(), 1000);
   }
 
-  public toggleHeaderInfo(): void { this.showTimer = !this.showTimer; }
-  public increase(): void { this.clickCount++; }
-  public decrease(): void { if (this.clickCount > 0) this.clickCount--; }
-  public ngOnDestroy(): void { clearInterval(this.timerId); }
-
-  public onColorModeChange(isDark: boolean): void {
-    this.themeService.setColorMode(isDark ? ColorMode.Dark : ColorMode.Light);
+  toggleHeaderInfo(): void {
+    this.showTimer = !this.showTimer;
   }
 
-  public onPresetChange(preset: ThemePreset): void {
+  increase(): void {
+    this.clickCount++;
+  }
+
+  decrease(): void {
+    if (this.clickCount > 0) this.clickCount--;
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.timerId);
+  }
+
+  onColorModeChange(isDark: boolean): void {
+    this.themeService.setColorMode(isDark ? ColorMode.DARK : ColorMode.LIGHT);
+  }
+
+  onPresetChange(preset: ThemePreset): void {
     this.themeService.setPreset(preset);
   }
 
-  public onLogout(): void {
+  onLogout(): void {
     this.authService.logout();
     this.router.navigate(['/login']);
   }
@@ -80,4 +102,5 @@ export class HeaderComponent implements OnDestroy {
   private updateDate(): void {
     this.currentDate.set(new Date().toLocaleString('ru-RU'));
   }
+
 }

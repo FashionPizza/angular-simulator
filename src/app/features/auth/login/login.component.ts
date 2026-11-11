@@ -15,19 +15,20 @@ import { AuthService } from '../auth.service';
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
+
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
   private readonly messageService = inject(MessageService);
 
-  public readonly submitting = signal(false);
+  readonly submitting = signal(false);
 
-  public readonly form = this.fb.group({
+  readonly form = this.fb.group({
     username: ['', Validators.required],
     password: ['', Validators.required],
   });
 
-  public onSubmit(): void {
+  onSubmit(): void {
     if (this.form.invalid || this.submitting()) {
       return;
     }
@@ -47,4 +48,5 @@ export class LoginComponent {
         },
       });
   }
+
 }

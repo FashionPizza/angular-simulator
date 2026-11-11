@@ -1,7 +1,7 @@
 import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, catchError, finalize, map, shareReplay, switchMap, throwError,} from 'rxjs';
+import { Observable, catchError, finalize, map, shareReplay, switchMap, throwError } from 'rxjs';
 import { AuthService } from './auth.service';
 
 let refreshRequest$: Observable<string> | null = null;
@@ -13,13 +13,12 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const accessToken = authService.accessToken;
 
   const authReq = accessToken
-    ? req.clone({ setHeaders: { Authorization: `Bearer ${accessToken}` } })
+    ? req.clone({ setHeaders: { Authorization: `Bearer ${ accessToken }` } })
     : req;
 
   return next(authReq).pipe(
     catchError((error: HttpErrorResponse) => {
-      const isAuthRequest =
-        req.url.includes('/auth/login') || req.url.includes('/auth/refresh');
+      const isAuthRequest = req.url.includes('/auth/login') || req.url.includes('/auth/refresh');
 
       if (error.status !== 401 || isAuthRequest) {
         return throwError(() => error);
@@ -52,7 +51,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
         switchMap((newAccessToken) =>
           next(
             req.clone({
-              setHeaders: { Authorization: `Bearer ${newAccessToken}` },
+              setHeaders: { Authorization: `Bearer ${ newAccessToken }` },
             }),
           ),
         ),

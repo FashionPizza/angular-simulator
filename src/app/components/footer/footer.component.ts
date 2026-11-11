@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -13,14 +13,16 @@ import { MessageService } from '../../message.service';
   styleUrl: './footer.component.scss',
 })
 export class FooterComponent {
-  public socials = socials;
-  public services = services;
-  public travelInfo = travelInfo;
-  public isSubscribed = false;
-  public email = '';
-  public constructor(private messageService: MessageService) {}
 
-  public onSubscribe(): void {
+  private messageService = inject(MessageService);
+
+  socials = socials;
+  services = services;
+  travelInfo = travelInfo;
+  isSubscribed = false;
+  email = '';
+
+  onSubscribe(): void {
     if (this.email && this.email.includes('@')) {
       this.isSubscribed = true; // Прячем блок
       this.messageService.showSuccess('Вы успешно подписались на рассылку!');
@@ -28,4 +30,5 @@ export class FooterComponent {
       this.messageService.showError('Введите корректный e-mail адрес');
     }
   }
+
 }

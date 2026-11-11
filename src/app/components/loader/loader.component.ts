@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { LoaderService } from '../../loader.service';
@@ -11,17 +11,19 @@ import { LoaderService } from '../../loader.service';
   styleUrl: './loader.component.scss',
 })
 export class LoaderComponent implements OnInit, OnDestroy {
+
+  loaderService = inject(LoaderService);
+
   private subscription?: Subscription;
 
-  public constructor(public loaderService: LoaderService) {}
-
-  public ngOnInit(): void {
-    this.subscription = this.loaderService.isLoading$.subscribe(isLoading => {
+  ngOnInit(): void {
+    this.subscription = this.loaderService.isLoading$.subscribe((isLoading) => {
       document.body.classList.toggle('loading-active', isLoading);
     });
   }
 
-  public ngOnDestroy(): void {
+  ngOnDestroy(): void {
     this.subscription?.unsubscribe();
   }
+
 }

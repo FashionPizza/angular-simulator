@@ -12,18 +12,22 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   styleUrl: './users-filter.component.scss',
 })
 export class UsersFilterComponent {
-  @Output() public filterChange = new EventEmitter<string>();
 
-  public nameControl = new FormControl('');
+  @Output() filterChange = new EventEmitter<string>();
+
+  nameControl = new FormControl('');
 
   private destroyRef = inject(DestroyRef);
 
-  public constructor() {
-    this.nameControl.valueChanges.pipe(
-      debounceTime(200),
-      map(value => (value ?? '').trim().toLowerCase()),
-      distinctUntilChanged(),
-      takeUntilDestroyed(this.destroyRef),
-    ).subscribe(value => this.filterChange.emit(value));
+  constructor() {
+    this.nameControl.valueChanges
+      .pipe(
+        debounceTime(200),
+        map((value) => (value ?? '').trim().toLowerCase()),
+        distinctUntilChanged(),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe((value) => this.filterChange.emit(value));
   }
+
 }

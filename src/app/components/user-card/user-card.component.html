@@ -5,7 +5,6 @@
   </div>
 
   <div class="user-card__body">
-
     <div class="user-card__section">
       <div class="user-card__section-label">Контакты</div>
       <div class="user-card__divider"></div>
@@ -13,9 +12,11 @@
     <div class="user-card__row">
       <span class="user-card__label">Эл. почта:</span>
       @if (user.email) {
-        <a class="user-card__value user-card__value--link" [href]="'mailto:' + user.email">{{ user.email }}</a>
+      <a class="user-card__value user-card__value--link" [href]="'mailto:' + user.email"
+        >{{ user.email }}</a
+      >
       } @else {
-        <span class="user-card__value">Неизвестно</span>
+      <span class="user-card__value">Неизвестно</span>
       }
     </div>
     <div class="user-card__row">
@@ -25,9 +26,14 @@
     <div class="user-card__row">
       <span class="user-card__label">Веб-сайт:</span>
       @if (user.website) {
-        <a class="user-card__value user-card__value--link" [href]="'https://' + user.website" target="_blank">{{ user.website }}</a>
+      <a
+        class="user-card__value user-card__value--link"
+        [href]="'https://' + user.website"
+        target="_blank"
+        >{{ user.website }}</a
+      >
       } @else {
-        <span class="user-card__value">Неизвестно</span>
+      <span class="user-card__value">Неизвестно</span>
       }
     </div>
 
@@ -54,12 +60,12 @@
     <div class="user-card__row">
       <span class="user-card__label">Координаты:</span>
       @if (user.address.geo.lat || user.address.geo.lng) {
-        <span class="user-card__geo">
-          <span class="user-card__geo-badge">{{ user.address.geo.lat || 'Неизвестно' }}</span>
-          <span class="user-card__geo-badge">{{ user.address.geo.lng || 'Неизвестно' }}</span>
-        </span>
+      <span class="user-card__geo">
+        <span class="user-card__geo-badge">{{ user.address.geo.lat || 'Неизвестно' }}</span>
+        <span class="user-card__geo-badge">{{ user.address.geo.lng || 'Неизвестно' }}</span>
+      </span>
       } @else {
-        <span class="user-card__value">Неизвестно</span>
+      <span class="user-card__value">Неизвестно</span>
       }
     </div>
 
@@ -73,13 +79,14 @@
     </div>
     <div class="user-card__row user-card__row--mission">
       <span class="user-card__label">Миссия:</span>
-      <span class="user-card__value user-card__value--italic">«{{ user.company.catchPhrase || 'Неизвестно' }}»</span>
+      <span class="user-card__value user-card__value--italic"
+        >«{{ user.company.catchPhrase || 'Неизвестно' }}»</span
+      >
     </div>
     <div class="user-card__row">
       <span class="user-card__label">Специализация:</span>
       <span class="user-card__value">{{ user.company.bs || 'Неизвестно' }}</span>
     </div>
-
   </div>
 
   <div class="user-card__footer">

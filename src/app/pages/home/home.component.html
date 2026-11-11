@@ -68,8 +68,8 @@
       <div class="about__subtitle">о нашем походе</div>
       <h2 class="about__title">Исследуйте все горные массивы мира вместе с нами</h2>
       <p class="about__text">
-        Его корни уходят в один фрагмент классической латыни 45 года н.э., то есть
-        более двух тысячелетий назад. Ричард МакКлинток, профессор латыни из колледжа.
+        Его корни уходят в один фрагмент классической латыни 45 года н.э., то есть более двух
+        тысячелетий назад. Ричард МакКлинток, профессор латыни из колледжа.
       </p>
       <button class="about__button" type="button" (click)="messageService.showSuccess()">
         Программа тура
@@ -84,19 +84,19 @@
       <div class="programs__subtitle">Наше предложение</div>
       <h2 class="programs__title">Лучшие программы для тебя</h2>
       <p class="programs__text">
-        Его корни уходят в один фрагмент классической латыни 45 года н.э., то есть более
-        двух тысячелетий назад. Ричард МакКлинток, профессор латыни из колледжа.
+        Его корни уходят в один фрагмент классической латыни 45 года н.э., то есть более двух
+        тысячелетий назад. Ричард МакКлинток, профессор латыни из колледжа.
       </p>
 
       <div class="programs__items">
         @for (item of programs; track item.title) {
-          <div class="programs__item">
-            <fa-icon [icon]="item.icon" [attr.aria-label]="item.title" />
-            <div class="programs__item-content">
-              <div class="programs__item-title">{{ item.title }}</div>
-              <div class="programs__item-text">{{ item.text }}</div>
-            </div>
+        <div class="programs__item">
+          <fa-icon [icon]="item.icon" [attr.aria-label]="item.title" />
+          <div class="programs__item-content">
+            <div class="programs__item-title">{{ item.title }}</div>
+            <div class="programs__item-text">{{ item.text }}</div>
           </div>
+        </div>
         }
       </div>
 
@@ -131,24 +131,24 @@
 
     <div class="destinations__cards">
       @for (destination of destinations; track destination.title) {
-        <div class="destinations__card">
-          <img class="destinations__image" [src]="destination.image" [alt]="destination.title" />
+      <div class="destinations__card">
+        <img class="destinations__image" [src]="destination.image" [alt]="destination.title" />
 
-          <div class="destinations__rating">
-            <div class="destinations__rating-content">
-              <fa-icon icon="star" [attr.aria-label]="'Рейтинг'" />
-              <span>{{ destination.rating }}</span>
-            </div>
-          </div>
-
-          <div class="destinations__info">
-            <div class="destinations__text">
-              <div class="destinations__name">{{ destination.title }}</div>
-              <div class="destinations__description">{{ destination.description }}</div>
-            </div>
-            <div class="destinations__price">{{ destination.price }}</div>
+        <div class="destinations__rating">
+          <div class="destinations__rating-content">
+            <fa-icon icon="star" [attr.aria-label]="'Рейтинг'" />
+            <span>{{ destination.rating }}</span>
           </div>
         </div>
+
+        <div class="destinations__info">
+          <div class="destinations__text">
+            <div class="destinations__name">{{ destination.title }}</div>
+            <div class="destinations__description">{{ destination.description }}</div>
+          </div>
+          <div class="destinations__price">{{ destination.price }}</div>
+        </div>
+      </div>
       }
     </div>
 
@@ -167,21 +167,21 @@
 
     <div class="blog__posts">
       @for (post of blogPosts; track post.title) {
-        <article class="blog__card">
-          <div class="blog__image">
-            <img [src]="post.image" [alt]="post.title" />
-          </div>
+      <article class="blog__card">
+        <div class="blog__image">
+          <img [src]="post.image" [alt]="post.title" />
+        </div>
 
-          <div class="blog__content">
-            <h3 class="blog__card-title">{{ post.title }}</h3>
-            <p class="blog__card-text">{{ post.description }}</p>
+        <div class="blog__content">
+          <h3 class="blog__card-title">{{ post.title }}</h3>
+          <p class="blog__card-text">{{ post.description }}</p>
 
-            <div class="blog__footer">
-              <span class="blog__date">{{ post.date }}</span>
-              <a class="blog__link" href="#">{{ post.link }}</a>
-            </div>
+          <div class="blog__footer">
+            <span class="blog__date">{{ post.date }}</span>
+            <a class="blog__link" href="#">{{ post.link }}</a>
           </div>
-        </article>
+        </div>
+      </article>
       }
     </div>
 
@@ -199,9 +199,9 @@
 
   <div class="moments__gallery">
     @for (item of moments; track item.image) {
-      <div class="moments__item" [ngClass]="item.class">
-        <img [src]="item.image" alt="Момент из похода" />
-      </div>
+    <div class="moments__item" [ngClass]="item.class">
+      <img [src]="item.image" alt="Момент из похода" />
+    </div>
     }
   </div>
 

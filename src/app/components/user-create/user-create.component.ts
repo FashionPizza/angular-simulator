@@ -1,21 +1,24 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { User } from '../../../enums/User';
+import { IUser } from '../../../enums/User';
 import { HoverBoldDirective } from '../../directives/hover-bold.directive';
 import { GradientBorderDirective } from '../../directives/gradient-border.directive';
 
 @Component({
   selector: 'app-user-create',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, HoverBoldDirective, GradientBorderDirective ],
+  imports: [CommonModule, ReactiveFormsModule, HoverBoldDirective, GradientBorderDirective],
   templateUrl: './user-create.component.html',
   styleUrl: './user-create.component.scss',
 })
 export class UserCreateComponent {
-  @Output() public create = new EventEmitter<User>();
 
-  public form: FormGroup;
+  private fb = inject(FormBuilder);
+
+  @Output() create = new EventEmitter<IUser>();
+
+  form: FormGroup;
 
   private readonly defaultFormValue = {
     name: '',
@@ -40,7 +43,7 @@ export class UserCreateComponent {
     },
   };
 
-  public constructor(private fb: FormBuilder) {
+  constructor() {
     this.form = this.fb.group({
       name: ['', [Validators.pattern(/^[A-Za-zА-Яа-яЁё\s'-]*$/)]],
       username: ['', [Validators.pattern(/^[A-Za-z0-9_.-]*$/)]],
@@ -65,13 +68,13 @@ export class UserCreateComponent {
     });
   }
 
-  public onSubmit(): void {
+  onSubmit(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
 
-    const newUser: User = {
+    const newUser: IUser = {
       id: Date.now(),
       ...this.form.value,
     };
@@ -79,4 +82,5 @@ export class UserCreateComponent {
     this.create.emit(newUser);
     this.form.reset(this.defaultFormValue);
   }
+
 }

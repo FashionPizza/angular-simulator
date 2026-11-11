@@ -1,4 +1,4 @@
-// 3. Создать функцию, которая принимает 2 числа и возвращает их сумму. 
+// 3. Создать функцию, которая принимает 2 числа и возвращает их сумму.
 // Полностью типизировать параметры, значение, возвращаемое функцией.
 
 // 4. Создать переменную status, которая может быть только: "loading", "success", "error".
@@ -9,13 +9,13 @@
 
 // 7. Создать интерфейс, который расширяется интерфейсом User с задания №6 и имеет свои дополнительные поля
 
-// 8. Создать функцию, которая принимает строку и вариант,  
+// 8. Создать функцию, которая принимает строку и вариант,
 // как именно форматировать строку (задание №5) и на основе этого возвращает форматированную строку.
 
 // 9. Создать функцию, которая принимает строку и символ, возвращает строку без переданного символа.
 // (есть специальные методы для этого, гуглим)
 
-// 10. Создать массив объектов на основе интерфейса с задания №6. 
+// 10. Создать массив объектов на основе интерфейса с задания №6.
 // Отфильтровать его по одному из параметров
 
 /* =========================
@@ -25,27 +25,27 @@ interface IUser {
   name: string;
   age: number;
   email?: string;
-};
+}
 
-interface IAdmin extends IUser {
+export interface IAdmin extends IUser {
   country: string;
   city: string;
-};
+}
 
 /* =========================
    2. Переменные
 ========================= */
-const status: "loading" | "success" | "error" = "loading";
+export const status: 'loading' | 'success' | 'error' = 'loading';
 
-const textFormat: "uppercase" | "lowercase" | "capitalize" = "uppercase";
+export const textFormat: 'uppercase' | 'lowercase' | 'capitalize' = 'uppercase';
 
 const customers: IUser[] = [
-  { name: "Stas", age: 17 },
-  { name: "Serega", age: 18 },
-  { name: "Obeme", age: 50 },
+  { name: 'Stas', age: 17 },
+  { name: 'Serega', age: 18 },
+  { name: 'Obeme', age: 50 },
 ];
 
-const adultCustomers = customers.filter(customer => customer.age >= 18);
+export const adultCustomers = customers.filter((customer) => customer.age >= 18);
 
 /* =========================
    3. Функции
@@ -53,29 +53,26 @@ const adultCustomers = customers.filter(customer => customer.age >= 18);
 // сумма
 export function sum(a: number, b: number): number {
   return a + b;
-};
+}
 
 // форматирование текста
-export function formatText(
-  text: string,
-  format: "uppercase" | "lowercase" | "capitalize"
-): string {
-  if (format === "uppercase") {
+export function formatText(text: string, format: 'uppercase' | 'lowercase' | 'capitalize'): string {
+  if (format === 'uppercase') {
     return text.toUpperCase();
   }
 
-  if (format === "lowercase") {
+  if (format === 'lowercase') {
     return text.toLowerCase();
   }
 
-  if (format === "capitalize") {
+  if (format === 'capitalize') {
     return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
   }
 
   return text;
-};
+}
 
 // возвращение строки без переданного символа
 export function removeChar(text: string, symbol: string): string {
-  return text.replaceAll(symbol, "");
-};
+  return text.replaceAll(symbol, '');
+}

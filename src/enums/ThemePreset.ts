@@ -1,6 +1,6 @@
 export enum ThemePreset {
-  Aura = 'Aura',
-  Lara = 'Lara',
-  Nora = 'Nora',
-  Custom = 'Custom',
+  AURA = 'Aura',
+  LARA = 'Lara',
+  NORA = 'Nora',
+  CUSTOM = 'Custom',
 }
