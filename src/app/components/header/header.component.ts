@@ -10,6 +10,7 @@ import { ThemeService } from '../../theme.service';
 import { ColorMode } from '../../../enums/ColorMode';
 import { ThemePreset } from '../../../enums/ThemePreset';
 import { AuthService } from '../../features/auth/auth.service';
+import { APP_CONFIG } from '../../app-config';
 
 interface INavItem {
   label: string;
@@ -37,9 +38,9 @@ export class HeaderComponent implements OnDestroy {
 
   themeService = inject(ThemeService);
 
-  companyName = 'РУМТИБЕТ';
+  companyName = inject(APP_CONFIG).companyName;
   clickCount = 0;
-  currentDate = signal('');
+  currentDate = signal(new Date());
   showTimer = true;
   liveText = '';
 
@@ -62,6 +63,7 @@ export class HeaderComponent implements OnDestroy {
   private readonly router = inject(Router);
 
   readonly user = this.authService.user;
+  readonly lastLoginAt = this.authService.lastLoginAt;
 
   private timerId: ReturnType<typeof setInterval>;
 
@@ -100,7 +102,7 @@ export class HeaderComponent implements OnDestroy {
   }
 
   private updateDate(): void {
-    this.currentDate.set(new Date().toLocaleString('ru-RU'));
+    this.currentDate.set(new Date());
   }
 
 }

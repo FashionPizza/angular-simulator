@@ -1,7 +1,15 @@
 import { HttpEventType, HttpInterceptorFn } from '@angular/common/http';
+import { inject } from '@angular/core';
 import { tap } from 'rxjs';
+import { APP_CONFIG } from '../app-config';
 
 export const loggingInterceptor: HttpInterceptorFn = (req, next) => {
+  const config = inject(APP_CONFIG);
+
+  if (!config.enableLogs) {
+    return next(req);
+  }
+
   const startedAt = performance.now();
 
   return next(req).pipe(

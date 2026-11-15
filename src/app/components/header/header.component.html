@@ -2,6 +2,9 @@
   @if (user(); as currentUser) {
   <div class="header__session">
     <span class="header__user">{{ currentUser.firstName }} {{ currentUser.lastName }}</span>
+    @if (lastLoginAt(); as lastLogin) {
+    <span class="header__last-login">Последний вход: {{ lastLogin | date }}</span>
+    }
     <p-button label="Выйти" severity="danger" text="true" (onClick)="onLogout()" />
   </div>
   }
@@ -30,7 +33,7 @@
     <div class="header__switch">
       <div class="header__info">
         @if (showTimer) {
-        <span class="header__timer">{{ currentDate() }}</span>
+        <span class="header__timer">{{ currentDate() | date }}</span>
         } @else {
         <div class="header__counter">
           <button type="button" (click)="decrease()">-</button>
@@ -63,7 +66,7 @@
     <p-toggleswitch
       inputId="theme-toggle"
       ariaLabel="Тёмный режим"
-      [ngModel]="(themeService.colorMode$ | async) === colorMode.Dark"
+      [ngModel]="(themeService.colorMode$ | async) === colorMode.DARK"
       (onChange)="onColorModeChange($event.checked)"
     >
       <ng-template #handle let-checked="checked">
