@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { socials, services, travelInfo } from '../../../data/information';
 import { MessageService } from '../../message.service';
+import { APP_CONFIG } from '../../app-config';
 
 @Component({
   selector: 'app-footer',
@@ -16,6 +17,8 @@ export class FooterComponent {
 
   private messageService = inject(MessageService);
 
+  companyName = inject(APP_CONFIG).companyName;
+
   socials = socials;
   services = services;
   travelInfo = travelInfo;
@@ -24,7 +27,7 @@ export class FooterComponent {
 
   onSubscribe(): void {
     if (this.email && this.email.includes('@')) {
-      this.isSubscribed = true; // Прячем блок
+      this.isSubscribed = true;
       this.messageService.showSuccess('Вы успешно подписались на рассылку!');
     } else {
       this.messageService.showError('Введите корректный e-mail адрес');

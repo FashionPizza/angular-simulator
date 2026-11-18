@@ -2,9 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { Observable, catchError, of, switchMap, tap } from 'rxjs';
 import { IAuth, IAuthUser } from './i-auth';
+import { APP_CONFIG } from '../../app-config';
 
 const ACCESS_TOKEN_KEY = 'auth-access-token';
 const REFRESH_TOKEN_KEY = 'auth-refresh-token';
+const LAST_LOGIN_KEY = 'auth-last-login';
 
 interface IRefreshResponse {
   accessToken: string;
@@ -15,10 +17,12 @@ interface IRefreshResponse {
 export class AuthService {
 
   private readonly http = inject(HttpClient);
+  private readonly config = inject(APP_CONFIG);
   private readonly baseUrl = 'https://dummyjson.com/auth';
 
   readonly user = signal<IAuthUser | null>(null);
   readonly isAuthenticated = computed(() => this.user() !== null);
+  readonly lastLoginAt = signal<Date | null>(this.readLastLogin());
 
   get accessToken(): string | null {
     return localStorage.getItem(ACCESS_TOKEN_KEY);
@@ -33,12 +37,15 @@ export class AuthService {
       .post<IAuth>(`${ this.baseUrl }/login`, {
         username: data.username,
         password: data.password,
-        expiresInMins: 60,
+        expiresInMins: this.config.sessionTimeout,
       })
       .pipe(
         tap((response) => this.setSession(response)),
         switchMap(() => this.http.get<IAuthUser>(`${ this.baseUrl }/me`)),
-        tap((user) => this.user.set(user)),
+        tap((user) => {
+          this.user.set(user);
+          this.saveLastLogin();
+        }),
       );
   }
 
@@ -46,7 +53,7 @@ export class AuthService {
     return this.http
       .post<IRefreshResponse>(`${ this.baseUrl }/refresh`, {
         refreshToken,
-        expiresInMins: 60,
+        expiresInMins: this.config.sessionTimeout,
       })
       .pipe(
         tap((response) => {
@@ -95,6 +102,17 @@ export class AuthService {
   private setSession(auth: IAuth): void {
     localStorage.setItem(ACCESS_TOKEN_KEY, auth.accessToken);
     localStorage.setItem(REFRESH_TOKEN_KEY, auth.refreshToken);
+  }
+
+  private saveLastLogin(): void {
+    const now = new Date();
+    localStorage.setItem(LAST_LOGIN_KEY, now.toISOString());
+    this.lastLoginAt.set(now);
+  }
+
+  private readLastLogin(): Date | null {
+    const raw = localStorage.getItem(LAST_LOGIN_KEY);
+    return raw ? new Date(raw) : null;
   }
 
 }

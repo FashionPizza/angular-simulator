@@ -1,7 +1,7 @@
-import { ApplicationConfig } from '@angular/core';
+import { ApplicationConfig, inject, provideAppInitializer } from '@angular/core';
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { inject, provideAppInitializer } from '@angular/core';
+import { DATE_PIPE_DEFAULT_OPTIONS } from '@angular/common';
 import { authInterceptor } from './features/auth/auth.interceptor';
 import { AuthService } from './features/auth/auth.service';
 import { loggingInterceptor } from './interceptors/logging.interceptor';
@@ -9,6 +9,7 @@ import { errorInterceptor } from './interceptors/error.interceptor';
 import { providePrimeNG } from 'primeng/config';
 import { routes } from './app.routes';
 import Aura from '@primeuix/themes/aura';
+import { APP_CONFIG, DEFAULT_APP_CONFIG } from './app-config';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -23,5 +24,7 @@ export const appConfig: ApplicationConfig = {
         },
       },
     }),
+    { provide: APP_CONFIG, useValue: DEFAULT_APP_CONFIG },
+    { provide: DATE_PIPE_DEFAULT_OPTIONS, useValue: { dateFormat: 'dd.MM.yyyy HH:mm' } },
   ],
 };
